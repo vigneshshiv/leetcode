@@ -1,5 +1,7 @@
 package code.ctci.strings;
 
+import java.util.Objects;
+
 public class PermutationString {
 
     /**
@@ -18,8 +20,35 @@ public class PermutationString {
         }
     }
 
+    /**
+     * Q? Given two strings, check if one is permutation of the other
+     *  OR
+     * Check if the two strings have identical character counts
+     *
+     */
+    static boolean identicalStrings(String s, String t) {
+        if (Objects.isNull(s) || Objects.isNull(t) || s.length() != t.length()) {
+            return false;
+        }
+        int[] letters = new int[128];
+        char[] s_array = s.toCharArray();
+        for (char c : s_array) {
+            letters[c]++;
+        }
+        for (int i = 0; i < t.length(); i++) {
+            int c = (int) t.charAt(i);
+            letters[c]--;
+            if (letters[c] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
-        permutation("ABC", "");
+        // permutation("ABC", "");
+        System.out.println("[abc] & [bca] Unique Characters - " + identicalStrings("abc", "bca"));
+        System.out.println("[moviee] & [moviie] Unique Characters - " + identicalStrings("moviee", "moviie"));
     }
 
 }
