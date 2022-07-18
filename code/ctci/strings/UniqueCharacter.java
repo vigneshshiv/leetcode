@@ -31,7 +31,7 @@ public class UniqueCharacter {
         int checker = 0;
         for (int i = 0; i < str.length(); i++) {
             int val = str.charAt(i) - 'a';
-            System.out.println("CharAt(i) - " + str.charAt(i) + ", CharAt(i)-'a' - " + val);
+            System.out.println("CharAt(i) - " + str.charAt(i) + ", CharAt(i) int value - " + (int) str.charAt(i) + ", CharAt(i)-'a' - " + val);
             System.out.println("1 << val - " + (1 << val) + ", checker & (1 << val) - " + (checker & (1 << val)));
             if ((checker & (1 << val)) > 0) {
                 return false;
@@ -45,6 +45,7 @@ public class UniqueCharacter {
     static void printBitManipulations() {
         System.out.println("1 << 0 - " + (1 << 0) + ", 1 >> 0 - " + (1 >> 0));
         System.out.println("1 << 2 - " + (1 << 2) + ", 1 >> 2 - " + (1 >> 2));
+        System.out.println("1 << 3 - " + (1 << 3) + ", 1 >> 5 - " + (1 >> 5));
         System.out.println("1 & 0 - " + (1 & 0) + ", 1 | 0 - " + (1 | 0));
         System.out.println("2 & 3 - " + (2 & 3) + ", 3 & 2 - " + (3 & 2));
         System.out.println("3 & 1 - " + (3 & 1) + ", 1 & 3 - " + (1 & 3));
@@ -52,8 +53,8 @@ public class UniqueCharacter {
     }
 
     public static void main(String[] args) {
-        System.out.println("[strings] Is Characters unique - " + isUniqueChars("string"));
-        System.out.println("[strings] Is Characters unique - " + isUniqueCharsBitVector("abca"));
+        System.out.println("[string] Is Characters unique - " + isUniqueChars("string"));
+        System.out.println("[abca] Is Characters unique - " + isUniqueCharsBitVector("abca"));
         printBitManipulations();
     }
 
