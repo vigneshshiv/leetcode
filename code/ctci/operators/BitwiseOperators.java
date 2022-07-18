@@ -43,7 +43,7 @@ public class BitwiseOperators {
      * Solution - XOR of any two same numbers will always be 0, and XOR of any number with 0 is the number itself.
      *
      * Time: O(n) time, where n is the number of elements in the array
-     * Space: O(1) time, no extra space allocated
+     * Space: O(1) space, no extra space allocated
      */
     static void findOddOccuringElement(int[] arr) {
         int checker = 0;
@@ -57,7 +57,7 @@ public class BitwiseOperators {
      * How to find the number is Power of 2
      *
      * Time: O(n) time, where n is the number of elements in the array
-     * Space: O(1) time, no extra space allocated
+     * Space: O(1) space, no extra space allocated
      */
     static void isPowerOfTwo(int n) {
         // n & (n - 1) never have a 1 bit in the same place.
