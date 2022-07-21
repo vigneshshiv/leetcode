@@ -69,6 +69,22 @@ public class LinkedListNode {
     }
 
     /**
+     * Is Two lists are Equal?
+     */
+    public static boolean isEqual(LinkedListNode node1, LinkedListNode node2) {
+        LinkedListNode head1 = node1;
+        LinkedListNode head2 = node2;
+        while (head1 != null && head2 != null) {
+            if (head1.data != head2.data) {
+                return false;
+            }
+            head1 = head1.next;
+            head2 = head2.next;
+        }
+        return head1 == null && head2 == null;
+    }
+
+    /**
      * Print data
      */
     public static void printData(LinkedListNode head) {
