@@ -11,12 +11,21 @@ public class MyStack<T> {
         }
     }
 
+    private int capacity;
+    private int size;
     private StaticNode<T> top;
+
+    /**
+     * Initialize with stack storage capacity
+     */
+    public MyStack(int capacity) {
+        this.capacity = capacity;
+    }
 
     /**
      * Remove the item from top of the stack
      */
-    private T pop() {
+    public T pop() {
         if (isEmpty()) return null;
         // Item to be removed
         T item = top.data;
@@ -27,7 +36,7 @@ public class MyStack<T> {
     /**
      * Add an item to the top of the stack
      */
-    private void push(T item) {
+    public void push(T item) {
         StaticNode<T> first = new StaticNode<T>(item);
         first.next = top;
         top = first;
@@ -36,7 +45,7 @@ public class MyStack<T> {
     /**
      * Return the item from the top of the stack
      */
-    private T peek() {
+    public T peek() {
         if (isEmpty()) return null;
         return top.data;
     }
@@ -44,8 +53,15 @@ public class MyStack<T> {
     /**
      * Return true if and only if the stack is empty
      */
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return top == null;
+    }
+
+    /**
+     * Is Stack is Full
+     */
+    public boolean isFull() {
+        return size == capacity;
     }
 
 }
