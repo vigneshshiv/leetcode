@@ -169,6 +169,18 @@ public class TreeNode {
         System.out.println("\n");
         // Check whether part of subtree is BST
         System.out.println("Find node 8 is BST - " + treeNode.isBST());
+        System.out.println();
+
+        // Minimal BST
+        int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        TreeNode rootNode = createMinimalBST(array);
+        System.out.println("Root? " + rootNode.data);
+        System.out.println("Created BST? " + rootNode.isBST());
+        System.out.println("Height - " + rootNode.height());
+        // Pre-Order Traversal
+        System.out.print("Pre-Order Traversal -- ");
+        printPreOrderTraversal(rootNode);
+        System.out.println();
     }
 
 }
