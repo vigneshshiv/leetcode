@@ -1,6 +1,7 @@
 package code.ctci.trees_and_graphs;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class TreeNode {
 
@@ -74,10 +75,29 @@ public class TreeNode {
         return true;
     }
 
+    public static boolean isBST(TreeNode node) {
+        return checkBST(node, null, null);
+    }
+
+    private static boolean checkBST(TreeNode node, Integer min, Integer max) {
+        if (node == null) return true;
+        if ((min != null && node.data <= min) || (max != null && node.data > max)) {
+            return false;
+        }
+        if (!checkBST(node.left, min, node.data) || !checkBST(node.right, node.data, max)) {
+            return false;
+        }
+        return true;
+    }
+
     public static TreeNode createMinimalBST(int[] arr) {
         return createMinimalBST(arr, 0, arr.length - 1);
     }
 
+    /**
+     * Time complexity: O(n) time, where n is the length of the array
+     * Space complexity: O(log n) space
+     */
     private static TreeNode createMinimalBST(int[] arr, int start, int end) {
         if (end < start) return null;
         int mid = (start + end) / 2;
@@ -85,6 +105,36 @@ public class TreeNode {
         node.setLeftNode(createMinimalBST(arr, start, mid - 1));
         node.setRightNode(createMinimalBST(arr, mid + 1, end));
         return node;
+    }
+
+    /**
+     * Time complexity: O(n) time
+     * Space complexity: O(h), where h is the height of the tree
+     *
+     */
+    private static int checkHeight(TreeNode node) {
+        if (node == null) return -1;
+        int leftHeight = checkHeight(node.left);
+        if (leftHeight == Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        int rightHeight = checkHeight(node.right);
+        if (rightHeight == Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        if (Math.abs(leftHeight - rightHeight) > 1) return Integer.MIN_VALUE;
+        else return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    /**
+     * Is Tree balanced
+     */
+    public static boolean isBalanced(TreeNode node) {
+        /*
+        // Non optimal way
+        if (node == null) return false;
+        int leftHeight = node.left != null ? node.left.height() + 1: 0;
+        int rightHeight = node.right != null ? node.right.height() + 1: 0;
+        System.out.println("Left Height - " + leftHeight + ", Right Height - " + rightHeight);
+        return Math.abs(leftHeight - rightHeight) <= 1;
+        */
+        return checkHeight(node) != Integer.MIN_VALUE;
     }
 
     public static void printInOrderTraversal(TreeNode node) {
@@ -181,6 +231,38 @@ public class TreeNode {
         System.out.print("Pre-Order Traversal -- ");
         printPreOrderTraversal(rootNode);
         System.out.println();
+
+        // BST Check
+        TreeNode bstTree = new TreeNode(20);
+        bstTree.left = new TreeNode(10);
+        bstTree.right = new TreeNode(30);
+        bstTree.left.right = new TreeNode(25);
+        System.out.println("Is Valid BST (Actually Not) - " + bstTree.isBST());
+        System.out.println("Is Valid BST with correct implementation - " + isBST(bstTree));
+
+        // Balanced Tree
+        TreeNode balancedTree = new TreeNode(5);
+        // Left side
+        balancedTree.left = new TreeNode(2);
+        balancedTree.left.left = new TreeNode(1);
+        balancedTree.left.right = new TreeNode(3);
+        balancedTree.left.right.right = new TreeNode(4);
+        // Right side
+        balancedTree.right = new TreeNode(8);
+        balancedTree.right.left = new TreeNode(6);
+        balancedTree.right.right = new TreeNode(9);
+        System.out.println("Is tree balanced - " + isBalanced(balancedTree));
+
+        // Not balanced tree
+        TreeNode notBalancedTree = new TreeNode(5);
+        // Left side
+        notBalancedTree.left = new TreeNode(2);
+        notBalancedTree.left.left = new TreeNode(1);
+        notBalancedTree.left.right = new TreeNode(3);
+        notBalancedTree.left.right.right = new TreeNode(4);
+        // Right side
+        notBalancedTree.right = new TreeNode(8);
+        System.out.println("Is tree balanced - " + isBalanced(notBalancedTree));
     }
 
 }
