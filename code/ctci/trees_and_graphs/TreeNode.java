@@ -1,7 +1,7 @@
 package code.ctci.trees_and_graphs;
 
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.Random;
 
 public class TreeNode {
 
@@ -135,6 +135,42 @@ public class TreeNode {
         return Math.abs(leftHeight - rightHeight) <= 1;
         */
         return checkHeight(node) != Integer.MIN_VALUE;
+    }
+
+    /**
+     * Get Random node
+     *
+     * Time complexity: O(log n), where n is the number of nodes
+     * Space complexity: O(log n)
+     */
+    public TreeNode getRandomNode() {
+        int leftSize = left == null ? 0 : left.size;
+        Random random = new Random();
+        int index = random.nextInt(size);
+        if (index == leftSize) {
+            return this;
+        } else if (index < leftSize) {
+            return left.getRandomNode();
+        } else {
+            return right.getRandomNode();
+        }
+    }
+
+    /**
+     * Get Random node by provided random index
+     *
+     * Time complexity: O(log n) OR accurately it is O(d), where d is the depth of the tree
+     * Space complexity: O(log n)
+     */
+    public TreeNode getRandomNode(int index) {
+        int leftSize = left == null ? 0 : left.size;
+        if (index == leftSize) {
+            return this;
+        } else if (index < leftSize) {
+            return left.getRandomNode(index);
+        } else {
+            return right.getRandomNode(index - (leftSize + 1));
+        }
     }
 
     public static void printInOrderTraversal(TreeNode node) {
