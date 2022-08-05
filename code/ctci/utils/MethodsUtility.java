@@ -54,6 +54,9 @@ public class MethodsUtility {
         return array;
     }
 
+    /**
+     * Option to use is Integer.toBinaryString(num)
+     */
     public static String convertToBinaryString(int n, int size) {
         String value = "";
         for (int i = 0; i < size; i++) {
