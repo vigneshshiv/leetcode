@@ -1,5 +1,7 @@
 package code.ctci.arrays;
 
+import code.ctci.utils.MethodsUtility;
+
 public class MatrixRotation {
 
     /**
@@ -25,17 +27,7 @@ public class MatrixRotation {
             }
         }
         System.out.println("Matrix rotate - ");
-        printArray(matrix, rows, columns);
-    }
-
-    static void printArray(int[][] matrix, int rows, int columns) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+        MethodsUtility.printArray(matrix, rows, columns);
     }
 
     public static void main(String[] args) {
@@ -48,7 +40,7 @@ public class MatrixRotation {
             }
         }
         System.out.println("Matrix input - ");
-        printArray(matrix, rows, columns);
+        MethodsUtility.printArray(matrix, rows, columns);
         //
         rotate(matrix, rows, columns);
     }

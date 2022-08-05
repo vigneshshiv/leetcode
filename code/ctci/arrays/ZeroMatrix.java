@@ -1,16 +1,8 @@
 package code.ctci.arrays;
 
-public class ZeroMatrix {
+import code.ctci.utils.MethodsUtility;
 
-    static void printArray(int[][] matrix, int rows, int columns) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
+public class ZeroMatrix {
 
     static void nullifyRow(int[][] matrix, int row) {
         for (int j = 0; j < matrix.length; j++) {
@@ -48,7 +40,7 @@ public class ZeroMatrix {
         for (int j = 0; j < columns.length; j++) {
             if (columns[j]) nullifyColumn(matrix, j);
         }
-        printArray(matrix, matrix.length, matrix[0].length);
+        MethodsUtility.printArray(matrix, matrix.length, matrix[0].length);
     }
 
     /**
@@ -96,7 +88,7 @@ public class ZeroMatrix {
         if (colHasZero) {
             nullifyColumn(matrix, 0);
         }
-        printArray(matrix, matrix.length, matrix[0].length);
+        MethodsUtility.printArray(matrix, matrix.length, matrix[0].length);
     }
 
     public static void main(String[] args) {
@@ -113,7 +105,7 @@ public class ZeroMatrix {
             }
         }
         System.out.println("Matrix input - ");
-        printArray(matrix, rows, columns);
+        MethodsUtility.printArray(matrix, rows, columns);
         // Set Zeros
         // setZeros(matrix);
         // Set Zeros with optimal space - O(1)
