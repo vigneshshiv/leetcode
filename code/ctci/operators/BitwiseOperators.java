@@ -203,6 +203,25 @@ public class BitwiseOperators {
         // << means final n = n * 2^m, where is the no. of times
         // >> means final n = n / 2^m, where is the no. of times
         System.out.println("3 << 2 - " + (3 << 2));
+
+        /**
+         * 1 << 2 => 0100
+         * ~(1 << 2) => 1011
+         * -(1 << 2) => 1011
+         *
+         * 5 => 0101
+         * ~(5) => -3 => 1101
+         * -(5) => ?
+         */
+        System.out.println("1 << 2 - " + (1 << 2) + ", Binary - " + Integer.toBinaryString(1 << 2));
+        System.out.println("~(1 << 2) - " + ~(1 << 2) + ", Binary - " + Integer.toBinaryString(~(1 << 2)));
+        System.out.println("-(1 << 2) - " + -(1 << 2) + ", Binary - " + Integer.toBinaryString(-(1 << 2)));
+        System.out.println();
+        System.out.println("5 - " + 5 + ", Binary - " + Integer.toBinaryString(5));
+        System.out.println("~(5) - " + ~(5) + ", Binary - " + Integer.toBinaryString(~(5)));
+        System.out.println("-(5) - " + -(5) + ", Binary - " + Integer.toBinaryString(-(5)));
+        System.out.println("12 & ~5 - " + (12 & ~(1 << 2)) + ", Binary - " + Integer.toBinaryString((12 & ~(1 << 2))));
+
         // Get Bit by AND
         BiFunction<Integer, Integer, Boolean> getBit = (num, i) -> (num & (1 << i)) != 0;
         BiFunction<Integer, Integer, Integer> getBitNum = (num, i) -> num & (1 << i);
@@ -277,7 +296,6 @@ public class BitwiseOperators {
         arr = new int[]{2, 2, 3, 2, 7, 7, 8, 7, 8, 8};
         int repeatTimes = 3;
         findOddOccuringElement(arr, repeatTimes);
-
         // Is the number of Power of 2
         isPowerOfTwo(24);
         isPowerOfTwo(16);
@@ -295,6 +313,7 @@ public class BitwiseOperators {
         findRightMostSetBit(6);
         findRightMostSetBit(160);
         System.out.println("6 is ~6: " + (~6) + ", 6 is -6: " + (-6));
+        System.out.println("12 & ~5 - " + (12 & ~(1 << 2)) + ", Binary - " + Integer.toBinaryString((12 & ~(1 << 2))));
     }
 
 }
