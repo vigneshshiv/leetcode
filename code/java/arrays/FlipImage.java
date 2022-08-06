@@ -18,15 +18,36 @@ public class FlipImage {
         System.out.println("Converted Image - " + Arrays.deepToString(image));
     }
 
+    /**
+     * Converted Image with Two pointers
+     */
+    private static void flipAndInvertImageWithTwoPointers(int[][] image) {
+        for (int[] pixels : image) {
+            int low = 0, high = pixels.length - 1;
+            while (low <= high) {
+                if (pixels[low] == pixels[high]) {
+                    int other = pixels[low] ^ 1;
+                    pixels[low] = pixels[high] ^ 1;
+                    pixels[high] = other;
+                }
+                low++;
+                high--;
+            }
+        }
+        System.out.println("Converted Image With Two Pointers - " + Arrays.deepToString(image));
+    }
+
     public static void main(String[] args) {
         int[][] image = {
                 {1, 1, 0}, {1, 0, 1}, {0, 0, 0}
         };
-        flipAndInvertImage(image);
+        // flipAndInvertImage(image);
+        flipAndInvertImageWithTwoPointers(image);
         int[][] photo = {
                 {1, 1, 0, 0}, {1, 0, 0, 1}, {0, 1, 1, 1}, {1, 0, 1, 0}
         };
-        flipAndInvertImage(photo);
+        // flipAndInvertImage(photo);
+        flipAndInvertImageWithTwoPointers(photo);
     }
 
 }
