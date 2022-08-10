@@ -1,9 +1,8 @@
-package code.java.dynamic_programming;
+package code.ctci.dynamic_programming;
 
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 
 /**
@@ -29,12 +28,12 @@ public class HowSum {
      * Time complexity: O(n^m * m), where n is the length of the array, and m is the target sum
      * Space complexity: O(m)
      */
-    private static List<Integer> targetSumCombinations(int targetSum, int[] numbers) {
+    private static List<Integer> targetSumCombination(int targetSum, int[] numbers) {
         if (targetSum == 0) return emptyList.get();
         if (targetSum < 0) return null;
         for (int num : numbers) {
             var remainder = targetSum - num;
-            var remainderResult = targetSumCombinations(remainder, numbers);
+            var remainderResult = targetSumCombination(remainder, numbers);
             if (Objects.nonNull(remainderResult)) {
                 return combiner.apply(remainderResult, num);
             }
@@ -46,7 +45,7 @@ public class HowSum {
      * Time complexity: O(n * m^2), where n is the length of the array, and m is the target sum
      * Space complexity: O(m^2)
      */
-    private static List<Integer> targetSumCombinationsMemo(int targetSum, int[] numbers, Map<Integer, List<Integer>> memo) {
+    private static List<Integer> targetSumCombinationMemo(int targetSum, int[] numbers, Map<Integer, List<Integer>> memo) {
         if (memo.containsKey(targetSum)) {
             return memo.get(targetSum);
         }
@@ -54,7 +53,7 @@ public class HowSum {
         if (targetSum < 0) return null;
         for (int num : numbers) {
             var remainder = targetSum - num;
-            var remainderResult = targetSumCombinations(remainder, numbers);
+            var remainderResult = targetSumCombinationMemo(remainder, numbers, memo);
             if (Objects.nonNull(remainderResult)) {
                 memo.put(targetSum, combiner.apply(remainderResult, num));
                 return memo.get(targetSum);
@@ -70,17 +69,17 @@ public class HowSum {
                 System.out.println(msg + ": Result - " + (Objects.nonNull(combination) ? combination.toString() : null));
         //
         /*
-        logger.accept(getMsg.apply(7, "[2, 3]"), targetSumCombinations(7, new int[]{2, 3})); // [3, 2, 2]
-        logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), targetSumCombinations(7, new int[]{5, 3, 4, 7})); // [4, 3]
-        logger.accept(getMsg.apply(7, "[2, 4]"), targetSumCombinations(7, new int[]{2, 4})); // null
-        logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombinations(8, new int[]{2, 3, 5})); // [2, 2, 2, 2]
-        logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombinations(300, new int[]{7, 14})); // null
+        logger.accept(getMsg.apply(7, "[2, 3]"), targetSumCombination(7, new int[]{2, 3})); // [3, 2, 2]
+        logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), targetSumCombination(7, new int[]{5, 3, 4, 7})); // [4, 3]
+        logger.accept(getMsg.apply(7, "[2, 4]"), targetSumCombination(7, new int[]{2, 4})); // null
+        logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombination(8, new int[]{2, 3, 5})); // [2, 2, 2, 2]
+        logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombination(300, new int[]{7, 14})); // null
         */
-        logger.accept(getMsg.apply(7, "[2, 3]"), targetSumCombinationsMemo(7, new int[]{2, 3}, new HashMap<>())); // [3, 2, 2]
-        logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), targetSumCombinationsMemo(7, new int[]{5, 3, 4, 7}, new HashMap<>())); // [4, 3]
-        logger.accept(getMsg.apply(7, "[2, 4]"), targetSumCombinationsMemo(7, new int[]{2, 4}, new HashMap<>())); // null
-        logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombinationsMemo(8, new int[]{2, 3, 5}, new HashMap<>())); // [2, 2, 2, 2]
-        logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombinationsMemo(300, new int[]{7, 14}, new HashMap<>())); // null
+        logger.accept(getMsg.apply(7, "[2, 3]"), targetSumCombinationMemo(7, new int[]{2, 3}, new HashMap<>())); // [3, 2, 2]
+        logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), targetSumCombinationMemo(7, new int[]{5, 3, 4, 7}, new HashMap<>())); // [4, 3]
+        logger.accept(getMsg.apply(7, "[2, 4]"), targetSumCombinationMemo(7, new int[]{2, 4}, new HashMap<>())); // null
+        logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombinationMemo(8, new int[]{2, 3, 5}, new HashMap<>())); // [2, 2, 2, 2]
+        logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombinationMemo(300, new int[]{7, 14}, new HashMap<>())); // null
     }
 
 }

@@ -1,4 +1,4 @@
-package code.java.dynamic_programming;
+package code.ctci.dynamic_programming;
 
 import java.util.HashMap;
 import java.util.Map;
