@@ -21,7 +21,8 @@ public class AllConstruct {
     };
 
     /**
-     * Time complexity:
+     * Time complexity: O(n^m * m), where n is the length of the word bank, m is target string length
+     * Space complexity: O(m^2)
      */
     private static List<List<String>> wordCombinations(String target, String[] wordBank) {
         if (target == "") return empty2DList.get();
@@ -40,7 +41,8 @@ public class AllConstruct {
     }
 
     /**
-     *
+     * Time complexity: O(n^m), where n is the length of the word bank, m is target string length
+     * Space complexity: O(m) space - Height of the recursive calls
      */
     private static List<List<String>> wordCombinationsMemo(String target, String[] wordBank, Map<String, List<List<String>>> memo) {
         if (memo.containsKey(target)) {

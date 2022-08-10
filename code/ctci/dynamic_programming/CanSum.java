@@ -1,5 +1,6 @@
 package code.ctci.dynamic_programming;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -38,21 +39,41 @@ public class CanSum {
      * Time complexity: O(n * m) time, where n is the length of the array, and m is the target sum
      * Space complexity: O(m) space
      */
-    static boolean canSumMemo(int targetSum, int[] array, Map<Integer, Boolean> memo) {
+    static boolean canSumMemo(int targetSum, int[] numbers, Map<Integer, Boolean> memo) {
         if (memo.containsKey(targetSum)) {
             return memo.get(targetSum);
         }
         if (targetSum == 0) return true;
         if (targetSum < 0) return false;
-        for (int num : array) {
+        for (int num : numbers) {
             var remainder = targetSum - num;
-            if (canSum(remainder, array)) {
+            if (canSum(remainder, numbers)) {
                 memo.put(targetSum, true);
                 return true;
             }
         }
         memo.put(targetSum, false);
         return false;
+    }
+
+    /**
+     * Time complexity: O(n * m), where n is the targetSum, m is the number's length
+     * Space complexity: O(m)
+     */
+    static boolean canSumTabulation(int targetSum, int[] numbers) {
+        boolean[] table = new boolean[targetSum + 1];
+        table[0] = true;
+        for (int i = 0; i < table.length; i++) {
+            if (table[i]) {
+                for (int j = 0; j < numbers.length; j++) {
+                    var index = i + numbers[j];
+                    if (index <= targetSum) {
+                        table[index] = true;
+                    }
+                }
+            }
+        }
+        return table[targetSum];
     }
 
     public static void main(String[] args) {
@@ -66,12 +87,20 @@ public class CanSum {
         logger.accept(getMsg.apply(8, "[2, 3, 5]"), canSum(8, new int[]{2, 3, 5})); // true
         logger.accept(getMsg.apply(300, "[7, 14]"), canSum(300, new int[]{7, 14})); // false
         */
+        // Memoization
+        /*
         logger.accept(getMsg.apply(7, "[2, 3]"), canSumMemo(7, new int[]{2, 3}, new HashMap<>())); // true
         logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), canSumMemo(7, new int[]{5, 3, 4, 7}, new HashMap<>())); // true
         logger.accept(getMsg.apply(7, "[2, 4]"), canSumMemo(7, new int[]{2, 4}, new HashMap<>())); // false
         logger.accept(getMsg.apply(8, "[2, 3, 5]"), canSumMemo(8, new int[]{2, 3, 5}, new HashMap<>())); // true
         logger.accept(getMsg.apply(300, "[7, 14]"), canSumMemo(300, new int[]{7, 14}, new HashMap<>())); // false
-
+        */
+        // Tabulation
+        logger.accept(getMsg.apply(7, "[2, 3]"), canSumTabulation(7, new int[]{2, 3})); // true
+        logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), canSumTabulation(7, new int[]{5, 3, 4, 7})); // true
+        logger.accept(getMsg.apply(7, "[2, 4]"), canSumTabulation(7, new int[]{2, 4})); // false
+        logger.accept(getMsg.apply(8, "[2, 3, 5]"), canSumTabulation(8, new int[]{2, 3, 5})); // true
+        logger.accept(getMsg.apply(300, "[7, 14]"), canSum(300, new int[]{7, 14})); // false
     }
 
 }

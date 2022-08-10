@@ -19,9 +19,9 @@ public class HowSum {
 
     private static BiFunction<List<Integer>, Integer, List<Integer>> combiner = (remainderResult, number) -> {
         List<Integer> current = new ArrayList<>();
+        current.addAll(remainderResult);
         current.add(number);
-        remainderResult.addAll(current);
-        return remainderResult;
+        return current;
     };
 
     /**
@@ -63,6 +63,28 @@ public class HowSum {
         return null;
     }
 
+    /**
+     * Time complexity:
+     * Space complexity:
+     */
+    private static List<Integer> targetSumCombinationTabulation(int targetSum, int[] numbers) {
+        Object[] table = new Object[targetSum + 1];
+        table[0] = emptyList.get();
+        var i = 0;
+        for (Object combination : table) {
+            if (Objects.nonNull(combination)) {
+                for (int j = 0; j < numbers.length; j++) {
+                    var index = i + numbers[j];
+                    if (index <= targetSum) {
+                        table[index] = combiner.apply((List<Integer>) combination, numbers[j]);
+                    }
+                }
+            }
+            i++;
+        }
+        return (List<Integer>) table[targetSum];
+    }
+
     public static void main(String[] args) {
         BiFunction<Integer, String, String> getMsg = (targetSum, numbers) -> "Target Sum - " + targetSum + ", Input - " + numbers;
         BiConsumer<String, List<Integer>> logger = (msg, combination) ->
@@ -75,11 +97,20 @@ public class HowSum {
         logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombination(8, new int[]{2, 3, 5})); // [2, 2, 2, 2]
         logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombination(300, new int[]{7, 14})); // null
         */
+        // Memoization
+        /*
         logger.accept(getMsg.apply(7, "[2, 3]"), targetSumCombinationMemo(7, new int[]{2, 3}, new HashMap<>())); // [3, 2, 2]
         logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), targetSumCombinationMemo(7, new int[]{5, 3, 4, 7}, new HashMap<>())); // [4, 3]
         logger.accept(getMsg.apply(7, "[2, 4]"), targetSumCombinationMemo(7, new int[]{2, 4}, new HashMap<>())); // null
         logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombinationMemo(8, new int[]{2, 3, 5}, new HashMap<>())); // [2, 2, 2, 2]
         logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombinationMemo(300, new int[]{7, 14}, new HashMap<>())); // null
+        */
+        // Tabulation
+        logger.accept(getMsg.apply(7, "[2, 3]"), targetSumCombinationTabulation(7, new int[]{2, 3})); // [3, 2, 2]
+        logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), targetSumCombinationTabulation(7, new int[]{3, 4})); // [4, 3]
+        logger.accept(getMsg.apply(7, "[2, 4]"), targetSumCombinationTabulation(7, new int[]{2, 4})); // null
+        logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombinationTabulation(8, new int[]{2, 3, 5})); // [2, 2, 2, 2]
+        logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombinationTabulation(300, new int[]{7, 14})); // null
     }
 
 }

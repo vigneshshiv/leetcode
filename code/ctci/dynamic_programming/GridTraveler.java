@@ -1,5 +1,6 @@
 package code.ctci.dynamic_programming;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +41,24 @@ public class GridTraveler {
         return result;
     }
 
+    /**
+     * Time complexity: O(n*m), where n is the no. of rows, m is no. of columns
+     * Space complexity: O(nm)
+     */
+    static int findWaysTabulation(int n, int m) {
+        int[][] table = new int[n + 1][m + 1];
+        table[1][1] = 1;
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                var current = table[i][j];
+                if (j + 1 <= m) table[i][j + 1] += current ;
+                if (i + 1 <= n) table[i + 1][j] += current;
+            }
+        }
+        // System.out.println(Arrays.deepToString(table));
+        return table[n][m];
+    }
+
     public static void main(String[] args) {
         BiConsumer<String, Integer> logger = (matrix, noOfWays) -> System.out.println(matrix + " matrix - " + noOfWays);
         /*
@@ -50,11 +69,20 @@ public class GridTraveler {
         logger.accept("15x15", findWays(15, 15)); // 40116600
         */
         // Memoized solution
+        /*
         logger.accept("1x1", findWaysMemo(1, 1, new HashMap<>()));
         logger.accept("2x3", findWaysMemo(2, 3, new HashMap<>()));
         logger.accept("3x2", findWaysMemo(3, 2, new HashMap<>()));
         logger.accept("3x3", findWaysMemo(3, 3, new HashMap<>()));
         logger.accept("15x15", findWaysMemo(15, 15, new HashMap<>())); // 40116600
+        */
+        // Tabulation
+        logger.accept("1x1", findWaysTabulation(1, 1));
+        logger.accept("2x2", findWaysTabulation(2, 2));
+        logger.accept("2x3", findWaysTabulation(2, 3));
+        logger.accept("3x2", findWaysTabulation(3, 2));
+        logger.accept("3x3", findWaysTabulation(3, 3));
+        logger.accept("15x15", findWaysTabulation(15, 15));
     }
 
 }
