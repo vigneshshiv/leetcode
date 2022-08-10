@@ -64,8 +64,8 @@ public class HowSum {
     }
 
     /**
-     * Time complexity:
-     * Space complexity:
+     * Time complexity: O(n * m^2), where n is the length of the array, and m is the target sum
+     * Space complexity: O(m^2)
      */
     private static List<Integer> targetSumCombinationTabulation(int targetSum, int[] numbers) {
         Object[] table = new Object[targetSum + 1];
