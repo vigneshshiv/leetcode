@@ -47,6 +47,25 @@ public class CanConstruct {
         return false;
     }
 
+    /**
+     * Time complexity: O(n * m^2), where n is the word bank length, and m is the target string length
+     * Space complexity: O(m) space
+     */
+    private static boolean constructWordTabulation(String target, String[] wordBank) {
+        boolean[] table = new boolean[target.length() + 1];
+        table[0] = true;
+        for (int i = 0; i < table.length; i++) {
+            if (table[i]) {
+                for (String word : wordBank) {
+                    if (i + word.length() <= target.length() && target.substring(i, i + word.length()).indexOf(word) == 0) {
+                        table[i + word.length()] = true;
+                    }
+                }
+            }
+        }
+        return table[target.length()];
+    }
+
     public static void main(String[] args) {
         BiFunction<String, String[], String> getMsg = (target, wordBank) -> "Target - " + target + ", Input - " + Arrays.toString(wordBank);
         BiConsumer<String, Boolean> logger = (msg, result) -> System.out.println(msg + ": " + result);
@@ -68,6 +87,8 @@ public class CanConstruct {
         wordBank = new String[] {"e", "ee", "eee", "eeee", "eeeee", "eeeeee"};
         logger.accept(getMsg.apply(target, wordBank), constructWord(target, wordBank));
         */
+        // Memoization
+        /*
         String target = "abcdef";
         String[] wordBank = new String[] {"ab", "abc", "cd", "def", "abcd"};
         logger.accept(getMsg.apply(target, wordBank), constructWordMemo(target, wordBank, new HashMap<>()));
@@ -83,6 +104,23 @@ public class CanConstruct {
         target = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeef";
         wordBank = new String[] {"e", "ee", "eee", "eeee", "eeeee", "eeeeee"};
         logger.accept(getMsg.apply(target, wordBank), constructWordMemo(target, wordBank, new HashMap<>()));
+        */
+        // Tabulation
+        String target = "abcdef";
+        String[] wordBank = new String[] {"ab", "abc", "cd", "def", "abcd"};
+        logger.accept(getMsg.apply(target, wordBank), constructWordTabulation(target, wordBank));
+        //
+        target = "skateboard";
+        wordBank = new String[] {"bo", "rd", "ate", "t", "ska", "sk", "boar"};
+        logger.accept(getMsg.apply(target, wordBank), constructWordTabulation(target, wordBank));
+        //
+        target = "enterpotentpot";
+        wordBank = new String[] {"a", "p", "ent", "enter", "ot", "o", "t"};
+        logger.accept(getMsg.apply(target, wordBank), constructWordTabulation(target, wordBank));
+        //
+        target = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeef";
+        wordBank = new String[] {"e", "ee", "eee", "eeee", "eeeee", "eeeeee"};
+        logger.accept(getMsg.apply(target, wordBank), constructWordTabulation(target, wordBank));
     }
 
 }

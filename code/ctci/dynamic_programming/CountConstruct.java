@@ -36,7 +36,7 @@ public class CountConstruct {
      * Time complexity: O(n * m^2), where n is the length of the word bank and m is target string
      * Space complexity: O(m^2)
      */
-    private static int findNoOfWaysMemo(String target, String[] wordBank, Map<String, Integer> memo) {
+    private static int findNoOfWaysByMemo(String target, String[] wordBank, Map<String, Integer> memo) {
         if (memo.containsKey(target)) {
             return memo.get(target);
         }
@@ -45,12 +45,31 @@ public class CountConstruct {
         for (String word : wordBank) {
             if (target.indexOf(word) == 0) {
                 var suffix = target.substring(word.length());
-                var noOfWays = findNoOfWaysMemo(suffix, wordBank, memo);
+                var noOfWays = findNoOfWaysByMemo(suffix, wordBank, memo);
                 count += noOfWays;
             }
         }
         memo.put(target, count);
         return count;
+    }
+
+    /**
+     * Time complexity: O(n * m^2) time, where n is the word bank length, and m is the target string length
+     * Space complexity: O(m) space
+     */
+    private static int findNoOfWaysByTabulation(String target, String[] wordBank) {
+        int[] table = new int[target.length() + 1];
+        table[0] = 1;
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] > 0) {
+                for (String word : wordBank) {
+                    if (i + word.length() <= target.length() && target.substring(i, i + word.length()).indexOf(word) == 0) {
+                        table[i + word.length()] += table[i];
+                    }
+                }
+            }
+        }
+        return table[target.length()];
     }
 
     public static void main(String[] args) {
@@ -78,25 +97,48 @@ public class CountConstruct {
         wordBank = new String[] {"e", "ee", "eee", "eeee", "eeeee", "eeeeee"};
         logger.accept(getMsg.apply(target, wordBank), findNoOfWays(target, wordBank));
         */
+        // Memoization
+        /*
         String target = "abcdef";
         String[] wordBank = new String[] {"ab", "abc", "cd", "def", "abcd"};
-        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysMemo(target, wordBank, new HashMap<>()));
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByMemo(target, wordBank, new HashMap<>()));
         //
         target = "skateboard";
         wordBank = new String[] {"bo", "rd", "ate", "t", "ska", "sk", "boar"};
-        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysMemo(target, wordBank, new HashMap<>()));
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByMemo(target, wordBank, new HashMap<>()));
         //
         target = "enterpotentpot";
         wordBank = new String[] {"a", "p", "ent", "enter", "ot", "o", "t"};
-        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysMemo(target, wordBank, new HashMap<>()));
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByMemo(target, wordBank, new HashMap<>()));
         //
         target = "purple";
         wordBank = new String[] {"purp", "p", "ur", "le", "purpl"};
-        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysMemo(target, wordBank, new HashMap<>()));
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByMemo(target, wordBank, new HashMap<>()));
         //
         target = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeef";
         wordBank = new String[] {"e", "ee", "eee", "eeee", "eeeee", "eeeeee"};
-        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysMemo(target, wordBank, new HashMap<>()));
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByMemo(target, wordBank, new HashMap<>()));
+        */
+        // Tabulation
+        String target = "abcdef";
+        String[] wordBank = new String[] {"ab", "abc", "cd", "def", "abcd"};
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByTabulation(target, wordBank));
+        //
+        target = "skateboard";
+        wordBank = new String[] {"bo", "rd", "ate", "t", "ska", "sk", "boar"};
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByTabulation(target, wordBank));
+        //
+        target = "enterpotentpot";
+        wordBank = new String[] {"a", "p", "ent", "enter", "ot", "o", "t"};
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByTabulation(target, wordBank));
+        //
+        target = "purple";
+        wordBank = new String[] {"purp", "p", "ur", "le", "purpl"};
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByTabulation(target, wordBank));
+        //
+        target = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeef";
+        wordBank = new String[] {"e", "ee", "eee", "eeee", "eeeee", "eeeeee"};
+        logger.accept(getMsg.apply(target, wordBank), findNoOfWaysByTabulation(target, wordBank));
     }
 
 }

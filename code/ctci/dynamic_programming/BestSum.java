@@ -17,12 +17,6 @@ public class BestSum {
     private static Supplier<List<Integer>> emptyList = () -> new ArrayList<>();
 
     private static BiFunction<List<Integer>, Integer, List<Integer>> combiner = (remainderResult, number) -> {
-        /*
-        List<Integer> current = new ArrayList<>();
-        current.add(number);
-        remainderResult.addAll(current);
-        return remainderResult;
-        */
         List<Integer> current = new ArrayList<>();
         current.addAll(remainderResult);
         current.add(number);
