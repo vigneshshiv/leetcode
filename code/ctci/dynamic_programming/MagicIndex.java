@@ -23,7 +23,7 @@ public class MagicIndex {
             return findIndex(array, start, mid - 1);
         }
     }
-    
+
     private static int findIndexInNotDistinctElements(int[] array) {
         return findIndexNotDistinct(array, 0, array.length - 1);
     }
