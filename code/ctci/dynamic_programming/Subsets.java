@@ -18,7 +18,7 @@ public class Subsets {
     private static BiFunction<List<List<Integer>>, Integer, List<List<Integer>>> combiner = (subsets, item) -> {
         List<List<Integer>> result = new ArrayList<>();
         result.addAll(subsets.stream().map(ArrayList::new).collect(Collectors.toList()));
-        result.forEach(set -> set.add(item));
+        result.forEach(set -> set.add(0, item));
         return result;
     };
 
