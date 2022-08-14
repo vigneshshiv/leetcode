@@ -95,10 +95,6 @@ class Box {
     public int height;
     public int depth;
 
-    public Box() {
-
-    }
-
     public Box(int width, int height, int depth) {
         this.width = width;
         this.height = height;
