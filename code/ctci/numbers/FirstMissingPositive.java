@@ -1,4 +1,4 @@
-package code.java.numbers;
+package code.ctci.numbers;
 
 import code.ctci.sorting.Sort;
 

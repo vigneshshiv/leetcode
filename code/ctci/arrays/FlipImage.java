@@ -1,4 +1,4 @@
-package code.java.arrays;
+package code.ctci.arrays;
 
 import java.util.Arrays;
 

@@ -1,10 +1,9 @@
-package code.java.features;
+package code.ctci.features;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ListRandomSubset {

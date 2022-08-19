@@ -1,4 +1,4 @@
-package code.java.linkedlist;
+package code.ctci.linkedlist;
 
 import java.util.LinkedList;
 

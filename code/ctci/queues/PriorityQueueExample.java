@@ -1,4 +1,4 @@
-package code.java.queues;
+package code.ctci.queues;
 
 import java.util.Arrays;
 import java.util.Comparator;

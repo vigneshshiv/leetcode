@@ -1,4 +1,4 @@
-package code.java.features;
+package code.ctci.features;
 
 import java.util.ArrayList;
 import java.util.List;
