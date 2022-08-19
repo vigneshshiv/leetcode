@@ -28,7 +28,7 @@ public class PriorityQueueExample {
         System.out.println("Remove (abc) - " + priorityQueue.remove());
         System.out.println("Priority Queue - 2nd Changes - " + priorityQueue);
         // With Comparator
-        Comparator<Integer> descendingOrder = (x, y) -> x.compareTo(y);
+        Comparator<Integer> descendingOrder = (x, y) -> y.compareTo(x);
         PriorityQueue<Integer> priorityQueueNumbers = new PriorityQueue<>(descendingOrder);
         priorityQueueNumbers.add(4);
         priorityQueueNumbers.add(5);
