@@ -2,6 +2,8 @@ package code.java.arrays;
 
 import code.java.utils.MethodsUtility;
 
+import java.util.Arrays;
+
 public class MatrixRotation {
 
     /**
@@ -33,12 +35,11 @@ public class MatrixRotation {
     public static void main(String[] args) {
         int rows = 4, columns = 4;
         int[][] matrix = new int[rows][columns];
-        int count = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                matrix[i][j] = count += 1;
-            }
-        }
+        // Arrays fill
+        Arrays.setAll(matrix, r -> {
+            Arrays.setAll(matrix[r], c -> (r * matrix[r].length) + c + 1);
+            return matrix[r];
+        });
         System.out.println("Matrix input - ");
         MethodsUtility.printArray(matrix, rows, columns);
         //
