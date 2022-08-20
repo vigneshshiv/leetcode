@@ -2,6 +2,9 @@ package code.java.searching;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+ */
 public class FirstAndLastPosition {
 
     /**
@@ -9,12 +12,12 @@ public class FirstAndLastPosition {
      * Space complexity: O(1)
      */
     private static int[] findFirstAndLastPosition(int[] arr, int target) {
-        int start = -1, end = -1;
-        start = searchIndex(arr, target, true);
-        if (start != -1) {
-            end = searchIndex(arr, target, false);
+        int[] result = {-1, -1};
+        result[0] = searchIndex(arr, target, true);
+        if (result[0] != -1) {
+            result[1] = searchIndex(arr, target, false);
         }
-        return new int[] {start, end};
+        return result;
     }
 
     private static int searchIndex(int[] arr, int target, boolean startIndex) {
