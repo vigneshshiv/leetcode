@@ -6,6 +6,7 @@ public class SmallestCeilingNumber {
 
     private static int findNextCeilingNumber(int[] arr, int target) {
         int low = 0, mid = 0, high = arr.length - 1;
+        if (target > arr[high]) return -1;
         while (low <= high) {
             mid = low + (high - low) / 2;
             if (arr[mid] < target) {
@@ -16,13 +17,12 @@ public class SmallestCeilingNumber {
                 return arr[mid];
             }
         }
-        return low >= arr.length ? -1 : arr[low];
+        return arr[low];
     }
 
     private static int findNextCeilingNumberRecursive(int[] arr, int target, int low, int high) {
+        if (target > arr[high]) return -1;
         if (low > high) {
-            if (high < 0) return arr[low];
-            if (low >= arr.length) return -1;
             return arr[low];
         }
         int mid = low + (high - low) / 2;

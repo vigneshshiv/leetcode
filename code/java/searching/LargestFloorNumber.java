@@ -6,6 +6,7 @@ public class LargestFloorNumber {
 
     private static int findLargestFloorNumber(int[] arr, int target) {
         int low = 0, mid = 0, high = arr.length - 1;
+        if (target < arr[low]) return -1;
         while (low <= high) {
             mid = low + (high - low) / 2;
             if (arr[mid] < target) {
@@ -16,12 +17,12 @@ public class LargestFloorNumber {
                 return arr[mid];
             }
         }
-        return high < 0 ? -1 : arr[high];
+        return arr[high];
     }
 
     private static int findLargestFloorNumberRecursive(int[] arr, int target, int low, int high) {
+        if (target < arr[low]) return -1;
         if (low > high) {
-            if (high < 0) return -1;
             if (low >= arr.length) return arr[low];
             return arr[high];
         }
