@@ -62,6 +62,44 @@ public class RotatedBinarySearch {
         return -1;
     }
 
+    /**
+     * Find maximum element index
+     */
+    private static int findPivotWithDuplicates(int[] arr) {
+        int low = 0, high = arr.length - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            // 1. if middle element is greater than next element, which means middle element is the highest,
+            // and next element starts in ascending order
+            if (mid < high && arr[mid] > arr[mid + 1]) {
+                return mid;
+            }
+            // 2. if middle element is smaller than the previous element, which means from middle element,
+            // elements are placed in ascending order, and previous element is the highest
+            if (mid > low && arr[mid] < arr[mid - 1]) {
+                return mid - 1;
+            }
+            // 3. If elements are at middle, start, end are equal then skip the duplicates
+            if (arr[mid] == arr[low] && arr[mid] == arr[high]) {
+                // Skip the duplicates
+                if (arr[low] > arr[low + 1]) {
+                    return low;
+                }
+                low++;
+                // Check whether pivot is high
+                if (arr[high] < arr[high - 1]) {
+                    return high - 1;
+                }
+                high--;
+            } else if (arr[low] == arr[mid] || (arr[low] == arr[mid] && arr[mid] > arr[high]) ) {
+                low = mid + 1;
+            } else {
+                high = high - 1;
+            }
+        }
+        return -1;
+    }
+
     private static int binarySearch(int[] arr, int target, int low, int high) {
         int mid = 0;
         while (low <= high) {
