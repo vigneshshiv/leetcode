@@ -9,10 +9,10 @@ public class SmallestCeilingNumber {
         if (target > arr[high]) return -1;
         while (low <= high) {
             mid = low + (high - low) / 2;
-            if (arr[mid] < target) {
-                low = mid + 1;
-            } else if (arr[mid] > target) {
+            if (target < arr[mid]) {
                 high = mid - 1;
+            } else if (target > arr[mid]) {
+                low = mid + 1;
             } else {
                 return arr[mid];
             }
@@ -26,10 +26,10 @@ public class SmallestCeilingNumber {
             return arr[low];
         }
         int mid = low + (high - low) / 2;
-        if (arr[mid] < target) {
-            return findNextCeilingNumberRecursive(arr, target, mid + 1, high);
-        } else if (arr[mid] > target) {
+        if (target < arr[mid]) {
             return findNextCeilingNumberRecursive(arr, target, low, mid - 1);
+        } else if (target > arr[mid]) {
+            return findNextCeilingNumberRecursive(arr, target, mid + 1, high);
         } else {
             return arr[mid];
         }

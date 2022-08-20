@@ -12,10 +12,10 @@ public class BinarySearch {
         int low = 0, mid = 0, high = arr.length - 1;
         while (low <= high) {
             mid = low + (high - low) / 2;
-            if (arr[mid] < target) {
-                low = mid + 1;
-            } else if (arr[mid] > target) {
+            if (target < arr[mid]) {
                 high = mid - 1;
+            } else if (target > arr[mid]) {
+                low = mid + 1;
             } else {
                 return mid;
             }
@@ -33,13 +33,13 @@ public class BinarySearch {
                 return mid;
             }
             if (isAsc) {
-                if (arr[mid] < target) {
-                    low = mid + 1;
-                } else {
+                if (target < arr[mid]) {
                     high = mid - 1;
+                } else {
+                    low = mid + 1;
                 }
             } else {
-                if (arr[mid] < target) {
+                if (target > arr[mid]) {
                     high = mid - 1;
                 } else {
                     low = mid + 1;
@@ -56,10 +56,10 @@ public class BinarySearch {
     private static int binarySearchRecursive(int[] arr, int target, int low, int high) {
         if (low > high) return -1;
         int mid = low + (high - low) / 2;
-        if (arr[mid] < target) {
-            return binarySearchRecursive(arr, target, mid + 1, high);
-        } else if (arr[mid] > target) {
+        if (target < arr[mid]) {
             return binarySearchRecursive(arr, target, low, mid - 1);
+        } else if (target > arr[mid]) {
+            return binarySearchRecursive(arr, target, mid + 1, high);
         } else {
             return mid;
         }
@@ -75,10 +75,10 @@ public class BinarySearch {
             return low;
         }
         int mid = low + (high - low) / 2;
-        if (arr[mid] < target) {
-            return binarySearchClosest(arr, target, mid + 1, high);
-        } else if (arr[mid] > target) {
+        if (target < arr[mid]) {
             return binarySearchClosest(arr, target, low, mid - 1);
+        } else if (target > arr[mid]) {
+            return binarySearchClosest(arr, target, mid + 1, high);
         } else {
             return mid;
         }
