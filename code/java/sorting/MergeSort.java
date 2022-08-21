@@ -95,8 +95,8 @@ public class MergeSort {
     private static int[] mergeSortOptimal(int[] arr) {
         if (arr.length == 1) return arr;
         int mid = arr.length / 2;
-        int[] left = mergeSortStandard(Arrays.copyOfRange(arr, 0, mid));
-        int[] right = mergeSortStandard(Arrays.copyOfRange(arr, mid, arr.length));
+        int[] left = mergeSortOptimal(Arrays.copyOfRange(arr, 0, mid));
+        int[] right = mergeSortOptimal(Arrays.copyOfRange(arr, mid, arr.length));
         return mergeOptimal(left, right);
     }
 

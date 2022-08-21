@@ -2,7 +2,10 @@ package code.java.sorting;
 
 import java.util.Arrays;
 
-public class SortedArrayMerge {
+/**
+ * https://leetcode.com/problems/merge-sorted-array/
+ */
+public class MergeSortedArray {
 
     /**
      * Time complexity: O(a + b)
@@ -33,6 +36,21 @@ public class SortedArrayMerge {
         int[] a = {3, 4, 7, 12, 0, 0, 0, 0, 0};
         int[] b = {2, 5, 10, 11, 13};
         merge(a, b, 4, b.length);
+        System.out.println("Sorted Merged Array - " + Arrays.toString(a));
+        //
+        a = new int[] {1, 2, 3, 0, 0, 0};
+        b = new int[] {2, 5, 6};
+        merge(a, b, 3, b.length);
+        System.out.println("Sorted Merged Array - " + Arrays.toString(a));
+        //
+        a = new int[] {0};
+        b = new int[] {1};
+        merge(a, b, 0, b.length);
+        System.out.println("Sorted Merged Array - " + Arrays.toString(a));
+        //
+        a = new int[] {};
+        b = new int[] {};
+        merge(a, b, 0, 0);
         System.out.println("Sorted Merged Array - " + Arrays.toString(a));
     }
 
