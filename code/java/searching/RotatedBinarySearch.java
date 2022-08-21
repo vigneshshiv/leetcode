@@ -37,7 +37,7 @@ public class RotatedBinarySearch {
     /**
      * Find maximum element index
      */
-    private static int findPivot(int[] arr) {
+    public static int findPivot(int[] arr) {
         int low = 0, high = arr.length - 1;
         while (low <= high) {
             int mid = low + (high - low) / 2;
