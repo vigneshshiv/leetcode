@@ -89,9 +89,10 @@ public class LinkedListNode {
      */
     public static void printData(LinkedListNode head) {
         while (head != null) {
-            System.out.print(head.data + " ");
+            System.out.print(head.data + " -> ");
             head = head.next;
         }
+        System.out.print("null");
         System.out.println();
     }
 
