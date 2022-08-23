@@ -1,5 +1,11 @@
 package code.java.linkedlist;
 
+/**
+ * https://leetcode.com/problems/linked-list-cycle/
+ *
+ * https://leetcode.com/problems/linked-list-cycle-ii/
+ *
+ */
 public class LinkedListLoopDetection {
 
     /**
@@ -55,6 +61,23 @@ public class LinkedListLoopDetection {
         loopStartNode.next.next.next = loopEndNode;
         head.next.next = loopStartNode;
         //
+        findLoopEntryNode(head);
+        // 1 - 2 -> (1)
+        head = new LinkedListNode(1);
+        LinkedListNode tail = new LinkedListNode(2);
+        head.next = tail;
+        tail.next = head;
+        findLoopEntryNode(head);
+        //
+        head = new LinkedListNode(1);
+        findLoopEntryNode(head);
+        //
+        head = new LinkedListNode(3);
+        LinkedListNode loopNode = new LinkedListNode(2);
+        head.next = loopNode;
+        loopNode.next = new LinkedListNode(0);
+        loopNode.next.next = new LinkedListNode(-4);
+        loopNode.next.next.next = loopNode;
         findLoopEntryNode(head);
     }
 
