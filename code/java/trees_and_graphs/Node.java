@@ -30,6 +30,7 @@ public class Node {
     }
 
     public Node[] getAdjacentNodes() {
+        if (this.adjacentCount == 0) return null;
         return this.adjacent;
     }
 

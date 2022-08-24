@@ -1,9 +1,6 @@
 package code.java.trees_and_graphs;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.Queue;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public class RouteBetweenNodes {
@@ -68,13 +65,49 @@ public class RouteBetweenNodes {
         return false;
     }
 
+    /**
+     * Recursive approach
+     *
+     * n - # of nodes
+     * e - # of edges (connection between two nodes)
+     *
+     * Time complexity: O(e), travel through every single edge of the graph
+     * Space complexity: O(n), every calls on the stack
+     */
+    private static boolean nodesAreConnectedRecursive(Graph graph, Node start, Node end) {
+        if (Objects.isNull(graph.getNodes()) || graph.getNodes().length == 0) {
+            System.out.println("Graph nodes are empty");
+            return false;
+        }
+        if (Objects.isNull(start) || Objects.isNull(end)) {
+            System.out.println("Neither Start nor End node shouldn't be Null");
+            return false;
+        }
+        Set<Node> visited = new HashSet<>();
+        return nodesConnected(graph, start, end, visited);
+    }
+
+    private static boolean nodesConnected(Graph graph, Node start, Node end, Set<Node> visited) {
+        if (Objects.equals(start, end)) return true;
+        if (visited.add(start)) {
+            for (Node adjacentNode : start.getAdjacentNodes()) {
+                boolean connected = nodesConnected(graph, adjacentNode, end, visited);
+                if (connected) return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         Graph graph = createGraph();
         Node[] nodes = graph.getNodes();
         Node start = nodes[3];
         Node end = nodes[5];
         System.out.println("Are D node and F nodes are connected - " + nodesAreConnected(graph, start, end));
+        System.out.println("Recursive: Are D node and F nodes are connected - " + nodesAreConnectedRecursive(graph, start, end));
+        //
         System.out.println("Are B node and E nodes are connected - " + nodesAreConnected(graph, nodes[1], nodes[4]));
+        System.out.println("Recursive: Are B node and E nodes are connected - " + nodesAreConnectedRecursive(graph, nodes[1], nodes[4]));
     }
 
 }
