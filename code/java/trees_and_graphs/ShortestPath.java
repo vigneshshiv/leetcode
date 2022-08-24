@@ -4,8 +4,6 @@ import java.util.*;
 
 public class ShortestPath {
 
-    record NodeData(String node, int distance) {};
-
     /**
      * n - # of nodes
      * e - # of edges
@@ -19,6 +17,8 @@ public class ShortestPath {
     }
 
     private static int shortestPath(Map<String, List<String>> graph, String src, String dst) {
+        record NodeData(String node, int distance) {};
+        //
         Set<String> visited = new HashSet<>();
         Queue<NodeData> queue = new LinkedList<>();
         queue.add(new NodeData(src, 0));
