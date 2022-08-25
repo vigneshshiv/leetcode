@@ -6,6 +6,7 @@ public class PrimeNumber {
      * This code runs in O(sqrt(n)) time
      */
     static boolean isPrime(int n) {
+        if (n < 2) return false;
         for (int x = 2; x <= Math.sqrt(n); x++) {
             if (n % x == 0) {
                 System.out.println("Prime (N) - " + n + ", divided by - " + x);

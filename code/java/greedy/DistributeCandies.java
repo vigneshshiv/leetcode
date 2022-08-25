@@ -18,6 +18,8 @@ public class DistributeCandies {
     /**
      * Time complexity: O(n log(n)) - sorting
      * Space complexity: O(n)
+     *
+     * Not working for this - {1, 2, 7, 4, 3, 3, 1}; // 12 (Result [1,2,3,2,1,2,1])
      */
     private static int distributeCandiesToKids(int[] ratings) {
         Arrays.sort(ratings);
@@ -39,19 +41,51 @@ public class DistributeCandies {
         return Arrays.stream(candies).sum();
     }
 
+    /**
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     */
+    private static int distributeCandiesOptimal(int[] ratings){
+        int prev = 0, distributedCandies = 0, decreaseSequence = 0, total = 0;
+        for (int rating : ratings) {
+            if (rating >= prev) {
+                if (decreaseSequence > 0) {
+                    if (decreaseSequence >= distributedCandies) {
+                        total += 1 + decreaseSequence - distributedCandies;
+                    }
+                    // Reset and starts from base condition
+                    decreaseSequence = 0;
+                    distributedCandies = 1;
+                }
+                distributedCandies = rating > prev ? distributedCandies + 1 : 1;
+                total += distributedCandies;
+            } else {
+                decreaseSequence += 1;
+                total += decreaseSequence;
+            }
+            prev = rating;
+        }
+        if (decreaseSequence >= distributedCandies) {
+            total += 1 + decreaseSequence - distributedCandies;
+        }
+        return total;
+    }
 
     public static void main(String[] args) {
         int[] ratings = {1, 3, 7, 1}; // 7 (Result [1,2,3,1])
         int[] input = ratings.clone();
         System.out.println("Input - " + Arrays.toString(input) + ", Distributed candies - " + distributeCandiesToKids(ratings));
+        System.out.println("Optimal: Input - " + Arrays.toString(input) + ", Distributed candies - " + distributeCandiesOptimal(input));
         //
         ratings = new int[] {1, 7, 4, 3, 1}; // 11 (Result [1,4,3,2,1])
         input = ratings.clone();
         System.out.println("Input - " + Arrays.toString(input) + ", Distributed candies - " + distributeCandiesToKids(ratings));
+        System.out.println("Optimal: Input - " + Arrays.toString(input) + ", Distributed candies - " + distributeCandiesOptimal(input));
         //
         ratings = new int[] {1, 2, 7, 4, 3, 3, 1}; // 12 (Result [1,2,3,2,1,2,1])
         input = ratings.clone();
         System.out.println("Input - " + Arrays.toString(input) + ", Distributed candies - " + distributeCandiesToKids(ratings));
+        System.out.println("Optimal: Input - " + Arrays.toString(input) + ", Distributed candies - " + distributeCandiesOptimal(input));
     }
 
 }
