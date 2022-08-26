@@ -1,70 +1,77 @@
 package code.java.threads;
 
+import java.util.ConcurrentModificationException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntConsumer;
 
 /**
  * https://leetcode.com/problems/fizz-buzz-multithreaded/
  */
-public class FizzBuzzAdvanced extends Thread {
+public class FizzBuzzAdvanced {
 
     private int n;
-    private static int current = 1;
-    private static Object lock = new Object();
+    private final AtomicInteger counter;
 
     public FizzBuzzAdvanced (int n) {
         this.n = n;
+        counter = new AtomicInteger(1);
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            synchronized (lock) {
-                if (current > n) return;
-                try {
-                    if (current % 15 == 0) {
-                        fizzbuzz(() -> { System.out.println("fizzbuzz"); });
-                    } else if (current % 3 == 0) {
-                        fizz(() -> { System.out.println("fizz"); });
-                    } else if (current % 5 == 0) {
-                        buzz(() -> { System.out.println("buzz"); });
-                    } else {
-                        number((num) -> System.out.println(num));
-                    }
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-                current++;
-            }
-        }
+    private void updateToNext(int count) {
+        counter.compareAndSet(count, count + 1);
     }
 
     // printFizz.run() outputs "fizz".
     public void fizz(Runnable printFizz) throws InterruptedException {
-        printFizz.run();
+        int count;
+        while ((count = counter.get()) <= n) {
+            if (count % 3 == 0 && count % 5 != 0) {
+                printFizz.run();
+                updateToNext(count);
+            }
+        }
     }
 
     // printBuzz.run() outputs "buzz".
     public void buzz(Runnable printBuzz) throws InterruptedException {
-        printBuzz.run();
+        int count;
+        while ((count = counter.get()) <= n) {
+            if (count % 5 == 0 && count % 3 != 0) {
+                printBuzz.run();
+                updateToNext(count);
+            }
+        }
     }
 
     // printFizzBuzz.run() outputs "fizzbuzz".
     public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
-        printFizzBuzz.run();
+        int count;
+        while ((count = counter.get()) <= n) {
+            if (count % 3 == 0 && count % 5 == 0) {
+                printFizzBuzz.run();
+                updateToNext(count);
+            }
+        }
     }
 
     // printNumber.accept(x) outputs "x", where x is an integer.
     public void number(IntConsumer printNumber) throws InterruptedException {
-        printNumber.accept(current);
+        int count;
+        while ((count = counter.get()) <= n) {
+            if (count % 3 != 0 && count % 5 != 0) {
+                printNumber.accept(count);
+                updateToNext(count);
+            }
+        }
     }
 
     public static void main(String[] args) {
         int n = 15;
-        Thread[] threads = new Thread[]{
-                new FizzBuzzAdvanced(n),
-                new FizzBuzzAdvanced(n),
-                new FizzBuzzAdvanced(n),
-                new FizzBuzzAdvanced(n)
+        Thread[] threads = new Thread[] {
+                new Thread(() -> new FizzBuzzAdvanced(n)),
+                new Thread(() -> new FizzBuzzAdvanced(n)),
+                new Thread(() -> new FizzBuzzAdvanced(n)),
+                new Thread(() -> new FizzBuzzAdvanced(n))
         };
         for (Thread thread : threads) {
             thread.start();
