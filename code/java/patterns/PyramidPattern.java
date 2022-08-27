@@ -20,6 +20,25 @@ public class PyramidPattern {
     }
 
     /**
+     * Same format as Pattern1
+     */
+    private static void pattern1Recursive(int n) {
+        pattern1PrintRecursion(n, 0);
+        System.out.println("\n");
+    }
+
+    private static void pattern1PrintRecursion(int line, int col) {
+        if (line == 0) return;
+        if (col < line) {
+            pattern1PrintRecursion(line, col + 1);
+            System.out.print("* ");
+        } else {
+            pattern1PrintRecursion(line - 1, 0);
+            System.out.println();
+        }
+    }
+
+    /**
      * Pattern format
      *     #
      *    ##
@@ -55,6 +74,25 @@ public class PyramidPattern {
             System.out.println();
         }
         System.out.println();
+    }
+
+    /**
+     * Same format as Pattern3
+     */
+    private static void pattern3Recursive(int n) {
+        pattern3PrintRecursion(n, 0);
+        System.out.println();
+    }
+
+    private static void pattern3PrintRecursion(int line, int col) {
+        if (line == 0) return;
+        if (col < line) {
+            System.out.print("* ");
+            pattern3PrintRecursion(line, col + 1);
+        } else {
+            System.out.println();
+            pattern3PrintRecursion(line - 1, 0);
+        }
     }
 
     /**
@@ -274,11 +312,13 @@ public class PyramidPattern {
 
     public static void main(String[] args) {
         // Pattern 1
-        pattern1(5);
+        // pattern1(5);
+        pattern1Recursive(5);
         // Pattern 2
         pattern2(5);
         //
-        pattern3(5);
+        // pattern3(5);
+        pattern3Recursive(5);
         //
         pattern4(5);
         //

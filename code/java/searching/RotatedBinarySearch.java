@@ -10,6 +10,29 @@ public class RotatedBinarySearch {
 
     /**
      * Time complexity: O(log n)
+     * Space complexity: O(log n)
+     */
+    private static int findIndexRecursive(int[] arr, int target, int low, int high) {
+        if (low > high) return -1;
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == target) {
+            return mid;
+        }
+        if (arr[low] <= arr[mid]) {
+            if (target >= arr[low] && target <= arr[mid]) {
+                return findIndexRecursive(arr, target, low, mid - 1);
+            } else {
+                return findIndexRecursive(arr, target, mid + 1, high);
+            }
+        }
+        if (target >= arr[mid] && target <= arr[high]) {
+            return findIndexRecursive(arr, target, mid + 1, high);
+        }
+        return findIndexRecursive(arr, target, low, mid - 1);
+    }
+
+    /**
+     * Time complexity: O(log n)
      * Space complexity: O(1)
      */
     private static int findIndexInRotatedArray(int[] arr, int target) {
@@ -120,16 +143,22 @@ public class RotatedBinarySearch {
         int target = 0;
         int result = findIndexInRotatedArray(arr, target);
         System.out.println("Input - " + Arrays.toString(arr) + ", Target - " + target + ", Result - " + result);
+        result = findIndexRecursive(arr, target, 0, arr.length - 1);
+        System.out.println("Recursion: Input - " + Arrays.toString(arr) + ", Target - " + target + ", Result - " + result);
         //
         arr = new int[] {4, 5, 6, 7, 0, 1, 2};
         target = 3;
         result = findIndexInRotatedArray(arr, target);
         System.out.println("Input - " + Arrays.toString(arr) + ", Target - " + target + ", Result - " + result);
+        result = findIndexRecursive(arr, target, 0, arr.length - 1);
+        System.out.println("Recursion: Input - " + Arrays.toString(arr) + ", Target - " + target + ", Result - " + result);
         //
         arr = new int[] {1};
         target = 0;
         result = findIndexInRotatedArray(arr, target);
         System.out.println("Input - " + Arrays.toString(arr) + ", Target - " + target + ", Result - " + result);
+        result = findIndexRecursive(arr, target, 0, arr.length - 1);
+        System.out.println("Recursion: Input - " + Arrays.toString(arr) + ", Target - " + target + ", Result - " + result);
     }
 
 }
