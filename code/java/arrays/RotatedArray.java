@@ -1,5 +1,7 @@
 package code.java.arrays;
 
+import code.java.utils.MethodsUtility;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -62,7 +64,7 @@ public class RotatedArray {
             rotateTimes = arr_length - rotateTimes;
         }
         // GCD
-        int g_c_d = gcd(rotateTimes, arr_length);
+        int g_c_d = MethodsUtility.gcd(rotateTimes, arr_length);
         int i, j, k, temp;
         for (i = 0; i < g_c_d; i++) {
             temp = arr[i];
@@ -77,11 +79,6 @@ public class RotatedArray {
             }
             arr[j] = temp;
         }
-    }
-
-    private static int gcd(int a, int b) {
-        if (b == 0) return a;
-        return gcd(b, a % b);
     }
 
     /**

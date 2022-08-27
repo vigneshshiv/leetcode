@@ -53,6 +53,19 @@ public class SqrtNumber {
         return (int) x;
     }
 
+    private static double sqrtNewtonMethodForPrecision(int n) {
+        double x = n;
+        double root = 0d;
+        while (true) {
+            root = 0.5 * (x + (n / x));
+            if (Math.abs(root - x) < 0.5) {
+                break;
+            }
+            x = root;
+        }
+        return root;
+    }
+
     public static void main(String[] args) {
         System.out.println("Square Root for 64 - " + findSqrtNumber(64, 1, 64));
         System.out.println("New Square Root for 65 - " + findSqrtOfNumber(65));
@@ -66,6 +79,7 @@ public class SqrtNumber {
         System.out.println("New Square Root for 5 - " + findSqrtOfNumber(5));
         System.out.println("New Square Root for 2147395599 - " + findSqrtOfNumber(2147395599));
         System.out.println((int) Math.sqrt(2147395599));
+        System.out.println("Newton Square Root for 18 - " + sqrtNewtonMethodForPrecision(18));
     }
 
 }
