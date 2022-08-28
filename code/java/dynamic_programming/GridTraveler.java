@@ -1,5 +1,7 @@
 package code.java.dynamic_programming;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -56,6 +58,24 @@ public class GridTraveler {
         return table[n][m];
     }
 
+    static List<String> findWaysPath(String prefix, int n, int m) {
+        List<String> result = new ArrayList<>();
+        if (n == 1 && m == 1) {
+            result.add(prefix);
+            return result;
+        }
+        if (n > 1 && m > 1) {
+            result.addAll(findWaysPath(prefix + 'D', n - 1, m - 1));
+        }
+        if (n > 1) {
+            result.addAll(findWaysPath(prefix + 'V', n - 1, m));
+        }
+        if (m > 1) {
+            result.addAll(findWaysPath(prefix + 'H', n, m - 1));
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         BiConsumer<String, Integer> logger = (matrix, noOfWays) -> System.out.println(matrix + " matrix - " + noOfWays);
         /*
@@ -80,6 +100,9 @@ public class GridTraveler {
         logger.accept("3x2", findWaysTabulation(3, 2));
         logger.accept("3x3", findWaysTabulation(3, 3));
         logger.accept("15x15", findWaysTabulation(15, 15));
+        //
+        List<String> result = findWaysPath("", 3, 3);
+        System.out.println(result);
     }
 
 }

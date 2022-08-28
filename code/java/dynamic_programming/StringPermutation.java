@@ -2,8 +2,11 @@ package code.java.dynamic_programming;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public class StringPermutation {
+
+    private static Supplier<List<String>> emptyList = () -> new ArrayList<>();
 
     /**
      * This algorithm runs exponential time.
@@ -12,15 +15,13 @@ public class StringPermutation {
      * Space complexity: O(n * n!)
      */
     private static List<String> getStringCombinations(String str) {
-        if (Objects.isNull(str)) return null;
-        List<String> result = new ArrayList<>();
+        List<String> result = emptyList.get();
         if (str.isEmpty()) {
             result.add("");
             return result;
         }
         char first = str.charAt(0);
-        String remainder = str.substring(1);
-        List<String> words = getStringCombinations(remainder);
+        List<String> words = getStringCombinations(str.substring(1));
         for (String word : words) {
             for (int idx = 0; idx <= word.length(); idx++) {
                 result.add(insertCharAt(word, first, idx));
@@ -42,13 +43,13 @@ public class StringPermutation {
     private static void getCombinations(String prefix, String str, List<String> result) {
         if (str.length() == 0) {
             result.add(prefix);
+            return;
         }
-        int len = str.length();
-        for (int idx = 0; idx < len; idx++) {
-            String before = str.substring(0, idx);
-            String after = str.substring(idx + 1, len);
-            char c = str.charAt(idx);
-            getCombinations(prefix + c, before + after, result);
+        char ch = str.charAt(0);
+        for (int idx = 0; idx <= prefix.length(); idx++) {
+            String before = prefix.substring(0, idx);
+            String after = prefix.substring(idx, prefix.length());
+            getCombinations(before + ch + after, str.substring(1), result);
         }
     }
 
@@ -85,7 +86,7 @@ public class StringPermutation {
 
     public static void main(String[] args) {
         BiConsumer<String, List<String>> logger = (word, combinations) -> System.out.println("Word - " + word + ", Combinations - " + combinations);
-        String str = "abcd";
+        String str = "abc";
         List<String> result = getStringCombinations(str);
         logger.accept(str, result);
         str = "abc";
