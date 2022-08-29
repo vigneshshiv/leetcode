@@ -22,14 +22,7 @@ public class MergeTwoSortedLists {
         if (Objects.isNull(list2)) {
             return list1;
         }
-        LinkedListNode head = null;
-        if (list1.data <= list2.data) {
-            head = list1;
-            list1 = list1.next;
-        } else {
-            head = list2;
-            list2 = list2.next;
-        }
+        LinkedListNode head = new LinkedListNode();
         LinkedListNode node = head;
         while (Objects.nonNull(list1) && Objects.nonNull(list2)) {
             if (list1.data <= list2.data) {
@@ -41,13 +34,8 @@ public class MergeTwoSortedLists {
             }
             node = node.next;
         }
-        if (Objects.nonNull(list1)) {
-            node.next = list1;
-        }
-        if (Objects.nonNull(list2)) {
-            node.next = list2;
-        }
-        return head;
+        node.next = Objects.nonNull(list1) ? list1 : list2;
+        return head.next;
     }
 
     /**
@@ -65,17 +53,10 @@ public class MergeTwoSortedLists {
         if (Objects.isNull(list2)) {
             return list1;
         }
-        LinkedListNode head = null;
-        if (list1.data <= list2.data) {
-            head = list1;
-            list1 = list1.next;
-        } else {
-            head = list2;
-            list2 = list2.next;
-        }
+        LinkedListNode head = new LinkedListNode();
         LinkedListNode node = head;
         node.next = mergeRecursive(list1, list2, node.next);
-        return head;
+        return head.next;
     }
 
     private static LinkedListNode mergeRecursive(LinkedListNode list1, LinkedListNode list2, LinkedListNode head) {
