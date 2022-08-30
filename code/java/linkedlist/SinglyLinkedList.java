@@ -1,5 +1,7 @@
 package code.java.linkedlist;
 
+import java.util.Objects;
+
 public class SinglyLinkedList {
 
     private Node head;
@@ -157,6 +159,55 @@ public class SinglyLinkedList {
         return current;
     }
 
+    private void reverseRecursive() {
+        reverse(head);
+    }
+
+    private void reverse(Node node) {
+        if (node == tail) {
+            head = tail;
+            return;
+        }
+        reverse(node.next);
+        tail.next = node;
+        tail = node;
+        node.next = null;
+    }
+
+    private void bubbleSort() {
+        bubbleSort(size - 1, 0);
+    }
+
+    private void bubbleSort(int itr, int idx) {
+        if (itr == 0) return;
+        if (idx < itr) {
+            Node first = get(idx);
+            Node second = get(idx + 1);
+            Node prev = null;
+            if (first.val > second.val) {
+                if (first == head) {
+                    first.next = second.next;
+                    second.next = first;
+                    head = second;
+                } else if (second == tail) {
+                    prev = get(idx - 1);
+                    prev.next = second;
+                    tail = first;
+                    first.next = null;
+                    second.next = tail;
+                } else {
+                    prev = get(idx - 1);
+                    prev.next = second;
+                    first.next = second.next;
+                    second.next = first;
+                }
+            }
+            bubbleSort(itr, idx + 1);
+        } else {
+            bubbleSort(itr - 1, 0);
+        }
+    }
+
     public void print() {
         if (head == null) return;
         Node node = head;
@@ -206,6 +257,25 @@ public class SinglyLinkedList {
         Node node = list.find(7);
         System.out.println("Node value - " + node != null ? node.val : "No data");
         list.insertAfterByRecursion(15, 2);
+        list.print();
+        System.out.println();
+        System.out.println("Bubble Sort");
+        // Bubble sort
+        list = new SinglyLinkedList();
+        for (int i = 7; i > 0; i--) {
+            list.insertLast(i);
+        }
+        list.print();
+        list.bubbleSort();
+        list.print();
+        System.out.println();
+        System.out.println("Reverse Recursion");
+        list = new SinglyLinkedList();
+        for (int i = 5; i > 0; i--) {
+            list.insertLast(i);
+        }
+        list.print();
+        list.reverseRecursive();
         list.print();
     }
 

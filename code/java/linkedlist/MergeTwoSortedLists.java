@@ -11,7 +11,7 @@ public class MergeTwoSortedLists {
      * Time complexity: O(min(m, n))
      * Space complexity: O(1)
      */
-    private static LinkedListNode mergeTwoLists(LinkedListNode list1, LinkedListNode list2) {
+    public static LinkedListNode mergeTwoLists(LinkedListNode list1, LinkedListNode list2) {
         // Base case
         if (Objects.isNull(list1) && Objects.isNull(list2)) {
             return list1;

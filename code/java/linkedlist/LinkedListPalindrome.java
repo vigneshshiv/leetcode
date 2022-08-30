@@ -2,7 +2,67 @@ package code.java.linkedlist;
 
 import java.util.Stack;
 
+/**
+ * https://leetcode.com/problems/palindrome-linked-list/
+ */
 public class LinkedListPalindrome {
+
+    /**
+     * Simplest approach
+     *  - Find the middle node
+     *  - Reverse a list from middle
+     *  - Compare both halves
+     *  - Re-reverse the list and return true if either of halves are empty
+     *
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     *
+     */
+    private static boolean checkPalindrome(LinkedListNode head) {
+        LinkedListNode mid = middleNode(head);
+        LinkedListNode secondHead = reverseList(mid);
+        LinkedListNode reverseHead = secondHead;
+        // Compare head with middle head
+        while (head != null && secondHead != null) {
+            if (head.data != secondHead.data) {
+                break;
+            }
+            head = head.next;
+            secondHead = secondHead.next;
+        }
+        reverseList(reverseHead);
+        return head == null || secondHead == null;
+    }
+
+    /**
+     * n - # of nodes in the linked list
+     *
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     */
+    private static LinkedListNode reverseList(LinkedListNode head) {
+        if (head == null) return null;
+        LinkedListNode prev = null;
+        LinkedListNode current = head;
+        //
+        while (current != null) {
+            LinkedListNode next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        return prev;
+    }
+
+    private static LinkedListNode middleNode(LinkedListNode head) {
+        LinkedListNode slow = head;
+        LinkedListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
 
     /**
      * Reverse and Compare approach
