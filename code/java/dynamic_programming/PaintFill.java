@@ -1,5 +1,6 @@
 package code.java.dynamic_programming;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class PaintFill {
@@ -56,11 +57,10 @@ public class PaintFill {
     public static void main(String[] args) {
         int n = 4;
         Color[][] screen = new Color[n][n];
-        for (int r = 0; r < n; r++) {
-            for (int c = 0; c < n; c++) {
-                screen[r][c] = Color.BLACK;
-            }
-        }
+        Arrays.setAll(screen, r -> {
+            Arrays.setAll(screen[r], c -> Color.BLACK);
+            return screen[r];
+        });
         int[][] green_colors = {
                 {0, 3}, {1, 1}, {2, 0}, {2, 1}, {2, 2}, {2, 3}, {3, 2}
         };
