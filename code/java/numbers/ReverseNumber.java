@@ -1,5 +1,8 @@
 package code.java.numbers;
 
+/**
+ * https://leetcode.com/problems/reverse-integer/
+ */
 public class ReverseNumber {
 
     /**
@@ -7,13 +10,18 @@ public class ReverseNumber {
      * Space complexity: O(1)
      */
     private static int reverse(int x) {
-        int num = 0, remainder = 0;
+        long num = 0, remainder = 0;
+        int sign = 1;
+        if (x < 0) {
+            x *= -1;
+            sign = -1;
+        }
         while (x > 0) {
             remainder = x % 10;
             num = (num * 10) + remainder;
             x /= 10;
         }
-        return num;
+        return num > Integer.MAX_VALUE ? 0 : (int) num * sign;
     }
 
     /**
@@ -37,6 +45,12 @@ public class ReverseNumber {
         x = 470;
         System.out.println(x + " Reverse - " + reverse(x));
         System.out.println(x + " Reverse - " + reverseNumber(x));
+        //
+        x = -123;
+        System.out.println(x + " Reverse - " + reverse(x));
+        //
+        int y = -1563847412;
+        System.out.println(y + " Reverse - " + reverse(y));
     }
 
 }
