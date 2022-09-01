@@ -1,12 +1,12 @@
 package code.java.dynamic_programming;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 
-public class Paranthesis {
+/**
+ * https://leetcode.com/problems/generate-parentheses/
+ */
+public class GenerateParenthesis {
 
     private static BiFunction<String, Integer, String> insertPair = (str, idx) -> {
         return str.substring(0, idx + 1) + "()" + str.substring(idx + 1, str.length());
@@ -31,6 +31,7 @@ public class Paranthesis {
     }
 
     private static List<String> generateParenthesisOptimal(int count) {
+        if (count == 1) return Arrays.asList("()");
         List<String> result = new ArrayList<>();
         char[] pairs = new char[count * 2];
         generatePairs(pairs, count, count, 0, result);

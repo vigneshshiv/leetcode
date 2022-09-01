@@ -7,9 +7,20 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 
+/**
+ * https://leetcode.com/problems/number-of-islands/
+ *
+ * https://leetcode.com/problems/max-area-of-island/
+ */
 public class IslandCount {
 
     private static BiFunction<Integer, Integer, String> getPosition = (r, c) -> r + "#" + c;
+
+    private static final int NO_DIRS = 4;
+    private static int[] DIRS = {0, 1, 0, -1, 0};
+    // OR
+    private static int[] DR = {0, 0, 1, -1};
+    private static int[] DC = {1, -1, 0, 0};
 
     /**
      * r - # of rows
@@ -41,14 +52,12 @@ public class IslandCount {
             return false;
         }
         if (Objects.equals(grid[row][col], "W")) return false;
-
         String pos = getPosition.apply(row, col);
         if (visited.contains(pos)) return false;
-        if (visited.add(pos)) {
-            exploreGrid(grid, row - 1, col, visited);
-            exploreGrid(grid, row + 1, col, visited);
-            exploreGrid(grid, row, col - 1, visited);
-            exploreGrid(grid, row, col + 1, visited);
+        // Mark as visited
+        visited.add(pos);
+        for (int dir = 0; dir < NO_DIRS; dir++) {
+            exploreGrid(grid, row + DIRS[dir], col + DIRS[dir + 1], visited);
         }
         return true;
     }
@@ -90,12 +99,12 @@ public class IslandCount {
         int landCount = 1;
         String pos = getPosition.apply(row, col);
         if (visited.contains(pos)) return 0;
-        if (visited.add(pos)) {
-            landCount += explore(grid, row - 1, col, visited);
-            landCount += explore(grid, row + 1, col, visited);
-            landCount += explore(grid, row, col - 1, visited);
-            landCount += explore(grid, row, col + 1, visited);
-        }
+        // Mark as visited
+        visited.add(pos);
+        landCount += explore(grid, row - 1, col, visited);
+        landCount += explore(grid, row + 1, col, visited);
+        landCount += explore(grid, row, col - 1, visited);
+        landCount += explore(grid, row, col + 1, visited);
         return landCount;
     }
 
@@ -123,6 +132,26 @@ public class IslandCount {
         MethodsUtility.printArray(grid, grid.length, grid[0].length);
         System.out.println("Island Count - " + islandCount(grid));
         System.out.println("Minimum Island Count - " + minimumIsland(grid)); // 1
+        System.out.println();
+        //
+        grid = new String[][] {
+                {"L", "L", "L", "L", "W"},
+                {"L", "L", "W", "L", "W"},
+                {"L", "L", "W", "W", "W"},
+                {"W", "W", "W", "W", "W"},
+        }; // 1
+        MethodsUtility.printArray(grid, grid.length, grid[0].length);
+        System.out.println("Island Count - " + islandCount(grid));
+        System.out.println();
+        //
+        grid = new String[][] {
+                {"L", "L", "W", "W", "W"},
+                {"L", "L", "W", "W", "W"},
+                {"W", "W", "L", "W", "W"},
+                {"W", "W", "W", "L", "L"},
+        }; // 3
+        MethodsUtility.printArray(grid, grid.length, grid[0].length);
+        System.out.println("Island Count - " + islandCount(grid));
         System.out.println();
         //
         grid = new String[][] {
