@@ -16,11 +16,6 @@ public class ArrayBuild {
         return result;
     }
 
-    // TODO
-    private static int[] buildArrayInPlace(int[] nums) {
-        return nums;
-    }
-
     public static void main(String[] args) {
         BiConsumer<int[], int[]> logger = (input, result) -> {
             System.out.println("Input - " + Arrays.toString(input) + ", Result - " + Arrays.toString(result));
