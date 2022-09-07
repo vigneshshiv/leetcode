@@ -1,6 +1,7 @@
 package code.java.queues;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -39,6 +40,11 @@ public class PriorityQueueExample {
         System.out.println("Peek (2) - " + priorityQueueNumbers.peek());
         Arrays.sort(priorityQueueNumbers.toArray());
         System.out.println("Priority Queue after Sorted - " + priorityQueueNumbers);
+        //
+        PriorityQueue<Integer> priorityQueue1 = new PriorityQueue<>(Collections.reverseOrder());
+        priorityQueue1.addAll(Arrays.asList(6, 2, 4, 5, 3, 7, 1, 9));
+        Arrays.sort(priorityQueue1.toArray());
+        System.out.println("-> " + priorityQueue1);
     }
 
 }

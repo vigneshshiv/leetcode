@@ -2,6 +2,9 @@ package code.java.searching;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode.com/problems/binary-search/
+ */
 public class BinarySearch {
 
     /**
