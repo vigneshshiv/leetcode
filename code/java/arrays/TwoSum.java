@@ -15,13 +15,11 @@ public class TwoSum {
      */
     private static int[] findTwoSumIndices(int[] nums, int target) {
         Map<Integer, Integer> table = new HashMap<>();
-        int num = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (table.containsKey(nums[i])) {
-                return new int[] { table.get(nums[i]), i };
+        for (int idx = 0; idx < nums.length; idx++) {
+            if (table.containsKey(nums[idx])) {
+                return new int[] { table.get(nums[idx]), idx };
             }
-            num = target - nums[i];
-            table.put(num, i);
+            table.put(target - nums[idx], idx);
         }
         return new int[] {-1, -1};
     }

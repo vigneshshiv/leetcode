@@ -11,7 +11,7 @@ public class MergeSortedArray {
      * Time complexity: O(a + b)
      * Space complexity: O(1)
      *
-     * @param a Holds a + b array size, which can accomodate to move b array to a in the sorted order
+     * @param a Holds a + b array size, which can free up space to move b array to a in the sorted order
      * @param b Array to be merged
      * @param a_count Count of a array
      * @param b_count Count of b array
@@ -29,6 +29,21 @@ public class MergeSortedArray {
                 b_idx--;
             }
             result_idx--;
+        }
+    }
+
+    /**
+     * Solved latest on 08SEP2022
+     */
+    private static void mergeOptimal(int[] nums1, int m, int[] nums2, int n) {
+        int idx = nums1.length - 1; m -= 1; n -= 1;
+        while (n >= 0) {
+            if (m >= 0 && nums1[m] > nums2[n]) {
+                nums1[idx] = nums1[m--];
+            } else {
+                nums1[idx] = nums2[n--];
+            }
+            idx--;
         }
     }
 

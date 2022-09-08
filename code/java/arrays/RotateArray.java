@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * https://leetcode.com/problems/rotate-array/
  */
-public class RotatedArray {
+public class RotateArray {
 
     /**
      * Time complexity: O(n)
