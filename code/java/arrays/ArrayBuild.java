@@ -16,13 +16,27 @@ public class ArrayBuild {
         return result;
     }
 
+    /**
+     * Follow-up: Can you solve it without using an extra space (i.e., O(1) memory)?
+     */
+    private static int[] buildArrayInPlace(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            nums[i] = nums[i] + n * (nums[nums[i]] % n);
+        }
+        for (int i = 0; i < n; i++) {
+            nums[i] /= n;
+        }
+        return nums;
+    }
+
     public static void main(String[] args) {
         BiConsumer<int[], int[]> logger = (input, result) -> {
             System.out.println("Input - " + Arrays.toString(input) + ", Result - " + Arrays.toString(result));
         };
         //
         int[] nums = {0, 2, 1, 5, 3, 4};
-        int[] result = buildArray(nums);
+        int[] result = buildArrayInPlace(nums.clone());
         logger.accept(nums, result);
         System.out.println();
         //

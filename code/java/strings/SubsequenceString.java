@@ -1,9 +1,6 @@
 package code.java.strings;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
@@ -92,6 +89,27 @@ public class SubsequenceString {
         return stack.isEmpty();
     }
 
+    private static boolean isSubsequenceUsingDP(String s, String t) {
+        int[][] table = new int[s.length()][t.length()];
+        Arrays.setAll(table, r -> {
+            Arrays.fill(table[r], -1);
+            return table[r];
+        });
+        int length = subsequence(s, t, s.length() - 1, t.length() - 1, table);
+        return length == s.length();
+    }
+
+    private static int subsequence(String s, String t, int i, int j, int[][] table) {
+        if (i < 0 || j < 0) return 0;
+        if (table[i][j] != -1) {
+            return table[i][j];
+        }
+        if (s.charAt(i) == t.charAt(j)) {
+            return table[i][j] = 1 + subsequence(s, t, i - 1, j - 1, table);
+        }
+        return table[i][j] = Math.max(subsequence(s, t, i - 1, j, table), subsequence(s, t, i, j - 1, table));
+    }
+
     public static void main(String[] args) {
         BiConsumer<String[], Boolean> logger = (input, isSubsequence) -> {
             System.out.println("S - " + input[0] + ", T - " + input[1] + ", Is Subsequence - " + isSubsequence);
@@ -107,6 +125,8 @@ public class SubsequenceString {
         //
         s = "abc"; t = "ahbgdc";
         isSubsequence = isSubsequenceOptimalForLargeSets(s, t);
+        logger.accept(new String[] {s, t}, isSubsequence);
+        isSubsequence = isSubsequenceUsingDP(s, t);
         logger.accept(new String[] {s, t}, isSubsequence);
         //
         s = "axc"; t = "ahbgdc";
