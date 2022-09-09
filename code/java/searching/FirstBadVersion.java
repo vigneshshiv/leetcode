@@ -13,18 +13,16 @@ public class FirstBadVersion {
 
     private static int firstBadVersion(int n) {
         if (n == 1) return 1;
-        int low = 0, mid = 0, high = n;
+        int low = 0, mid = 0, high = n - 1;
         while (low <= high) {
             mid = low + (high - low) / 2;
-            // Call to API
-            boolean result = isBadVersion(mid);
-            if (!result) {
-                low = mid + 1;
-            } else {
+            if (isBadVersion(mid)) {
                 high = mid - 1;
+            } else {
+                low = mid + 1;
             }
         }
-        return mid;
+        return low;
     }
 
     public static void main(String[] args) {
