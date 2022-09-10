@@ -1,5 +1,6 @@
-package code.java.trees_and_graphs;
+package code.java.graphs;
 
+import code.java.trees.TreeNode;
 import code.java.utils.MethodsUtility;
 
 import java.util.*;

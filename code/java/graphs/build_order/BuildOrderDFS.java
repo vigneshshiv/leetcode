@@ -1,4 +1,4 @@
-package code.java.trees_and_graphs.build_order;
+package code.java.graphs.build_order;
 
 import java.util.Arrays;
 import java.util.List;

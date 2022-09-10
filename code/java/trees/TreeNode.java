@@ -1,4 +1,4 @@
-package code.java.trees_and_graphs;
+package code.java.trees;
 
 import java.util.Arrays;
 import java.util.Random;

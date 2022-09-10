@@ -1,4 +1,6 @@
-package code.java.trees_and_graphs;
+package code.java.graphs;
+
+import code.java.graphs.Graph;
 
 import java.util.*;
 

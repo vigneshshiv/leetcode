@@ -1,6 +1,6 @@
 package code.java.utils;
 
-import code.java.trees_and_graphs.TreeNode;
+import code.java.trees.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Objects;

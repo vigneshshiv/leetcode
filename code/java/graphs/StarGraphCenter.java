@@ -1,4 +1,4 @@
-package code.java.trees_and_graphs;
+package code.java.graphs;
 
 /**
  * https://leetcode.com/problems/find-center-of-star-graph/

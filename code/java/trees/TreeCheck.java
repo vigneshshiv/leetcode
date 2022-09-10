@@ -1,4 +1,4 @@
-package code.java.trees_and_graphs;
+package code.java.trees;
 
 /**
  * https://leetcode.com/problems/root-equals-sum-of-children/

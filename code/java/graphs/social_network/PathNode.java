@@ -1,4 +1,4 @@
-package code.java.trees_and_graphs.social_network;
+package code.java.graphs.social_network;
 
 import java.util.LinkedList;
 import java.util.Objects;

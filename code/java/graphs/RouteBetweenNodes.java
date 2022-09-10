@@ -1,4 +1,7 @@
-package code.java.trees_and_graphs;
+package code.java.graphs;
+
+import code.java.graphs.Graph;
+import code.java.graphs.Node;
 
 import java.util.*;
 import java.util.function.BiConsumer;
