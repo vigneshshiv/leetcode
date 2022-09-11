@@ -110,7 +110,8 @@ public class HowSum {
         logger.accept(getMsg.apply(7, "[5, 3, 4, 7]"), targetSumCombinationTabulation(7, new int[]{3, 4})); // [4, 3]
         logger.accept(getMsg.apply(7, "[2, 4]"), targetSumCombinationTabulation(7, new int[]{2, 4})); // null
         logger.accept(getMsg.apply(8, "[2, 3, 5]"), targetSumCombinationTabulation(8, new int[]{2, 3, 5})); // [2, 2, 2, 2]
-        logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombinationTabulation(300, new int[]{7, 14})); // null
+        logger.accept(getMsg.apply(6, "[2, 4, 6, 10]"), targetSumCombinationTabulation(6, new int[]{2, 4, 6, 10})); // [2, 2, 2, 2]
+        // logger.accept(getMsg.apply(300, "[7, 14]"), targetSumCombinationTabulation(300, new int[]{7, 14})); // null
     }
 
 }

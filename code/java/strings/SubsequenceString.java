@@ -89,25 +89,44 @@ public class SubsequenceString {
         return stack.isEmpty();
     }
 
-    private static boolean isSubsequenceUsingDP(String s, String t) {
+    private static boolean isSubquenceUsingDPRecursive(String s, String t) {
+        int[][] memo = new int[s.length()][t.length()];
+        int length = lcsRecursion(s, t, s.length() - 1, t.length() - 1, memo);
+        return length == s.length();
+    }
+
+    private static int lcsRecursion(String s, String t, int i, int j, int[][] memo) {
+        int result = 0;
+        if (memo[i][j] > 0) return memo[i][j];
+        if (i == 0 || j == 0) return result;
+        if (s.charAt(i) == t.charAt(j)) {
+            result = 1 + lcsRecursion(s, t, i - 1, j - 1, memo);
+        } else {
+            result = Math.max(lcsRecursion(s, t, i - 1, j, memo), lcsRecursion(s, t, i, j - 1, memo));
+        }
+        memo[i][j] = result;
+        return result;
+    }
+
+    private static boolean isSubsequenceUsingDPBottomUp(String s, String t) {
         int[][] table = new int[s.length()][t.length()];
         Arrays.setAll(table, r -> {
             Arrays.fill(table[r], -1);
             return table[r];
         });
-        int length = subsequence(s, t, s.length() - 1, t.length() - 1, table);
+        int length = lcsBottomUp(s, t, s.length() - 1, t.length() - 1, table);
         return length == s.length();
     }
 
-    private static int subsequence(String s, String t, int i, int j, int[][] table) {
+    private static int lcsBottomUp(String s, String t, int i, int j, int[][] table) {
         if (i < 0 || j < 0) return 0;
         if (table[i][j] != -1) {
             return table[i][j];
         }
         if (s.charAt(i) == t.charAt(j)) {
-            return table[i][j] = 1 + subsequence(s, t, i - 1, j - 1, table);
+            return table[i][j] = 1 + lcsBottomUp(s, t, i - 1, j - 1, table);
         }
-        return table[i][j] = Math.max(subsequence(s, t, i - 1, j, table), subsequence(s, t, i, j - 1, table));
+        return table[i][j] = Math.max(lcsBottomUp(s, t, i - 1, j, table), lcsBottomUp(s, t, i, j - 1, table));
     }
 
     public static void main(String[] args) {
@@ -126,7 +145,7 @@ public class SubsequenceString {
         s = "abc"; t = "ahbgdc";
         isSubsequence = isSubsequenceOptimalForLargeSets(s, t);
         logger.accept(new String[] {s, t}, isSubsequence);
-        isSubsequence = isSubsequenceUsingDP(s, t);
+        isSubsequence = isSubquenceUsingDPRecursive(s, t);
         logger.accept(new String[] {s, t}, isSubsequence);
         //
         s = "axc"; t = "ahbgdc";

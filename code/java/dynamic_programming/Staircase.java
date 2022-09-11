@@ -17,6 +17,10 @@ public class Staircase {
     /**
      * Time complexity: O(n), where n is the no of branching on each recursive call
      * Space complexity: O(n^2)
+     *
+     * In case, if num of steps allowed to take, then iterate through the array and return the result
+     *  {1, 3, 5} => for each n of {1, 3, 5} -> count += f(n - i)
+     *
      */
     private static int countWaysMemo(int n, int[] memo) {
         if (n > 0 && memo[n] > 0) return memo[n];
