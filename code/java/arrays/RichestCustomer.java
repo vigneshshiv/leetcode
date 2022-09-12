@@ -21,7 +21,7 @@ public class RichestCustomer {
         return maxWealth;
     }
 
-    private static int maximumWealthOptional(int[][] accounts) {
+    private static int maximumWealthOneLiner(int[][] accounts) {
         return Arrays.stream(accounts)
                 .mapToInt(person -> Arrays.stream(person).sum())
                 .max()
