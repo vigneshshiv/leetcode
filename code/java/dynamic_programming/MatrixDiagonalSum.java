@@ -24,6 +24,15 @@ public class MatrixDiagonalSum {
         return sum;
     }
 
+    private static int diagonalSumOptimal(int[][] matrix) {
+        int sum = 0, n = matrix.length;
+        if (n == 1) return matrix[0][0];
+        for (int r = 0, c = n - 1; r < n; r++, c--) {
+            sum += matrix[r][r] + matrix[c][r];
+        }
+        return (n & 1) == 0 ? sum : sum - matrix[n / 2][n / 2];
+    }
+
     /**
      * https://leetcode.com/problems/matrix-diagonal-sum/discuss/2510386/Java-Simple-Solution-in-one-pass...
      */
@@ -44,7 +53,7 @@ public class MatrixDiagonalSum {
             return matrix[r];
         });
         int sum = diagonalSum(matrix);
-        int oneLineSum = diagonalSumOneLine(matrix);
+        int oneLineSum = diagonalSumOptimal(matrix);
         System.out.println("Sum - " + sum + ", One line sum - " + oneLineSum);
         //
         Arrays.setAll(matrix, r -> {

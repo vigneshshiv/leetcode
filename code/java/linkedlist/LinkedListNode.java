@@ -109,6 +109,19 @@ public class LinkedListNode {
         System.out.println();
     }
 
+    /**
+     * Create Nodes from array of elements
+     */
+    public static LinkedListNode createNodes(int[] nums) {
+        LinkedListNode head = new LinkedListNode();
+        LinkedListNode current = head;
+        for (int num : nums) {
+            current.next = new LinkedListNode(num);
+            current = current.next;
+        }
+        return head.next;
+    }
+
     public static void main(String[] args) {
         // Doubly Linked List -- 3 -> 7 -> 4
         LinkedListNode head = new LinkedListNode(3);

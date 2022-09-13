@@ -108,6 +108,38 @@ public class IslandCount {
         return landCount;
     }
 
+    private static int maxAreaOfIsland(int[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        if (rows == 1 && cols == 1) {
+            return grid[0][0];
+        }
+        int maxArea = 0;
+        Set<String> visited = new HashSet<>();
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (grid[r][c] == 1) {
+                    maxArea = Math.max(maxArea, exploreArea(grid, r, c, visited));
+                }
+            }
+        }
+        return maxArea;
+    }
+
+    private static int exploreArea(int[][] grid, int row, int col, Set<String> visited) {
+        boolean rowInbounds = (0 <= row && row < grid.length);
+        boolean colInbounds = (0 <= col && col < grid[0].length);
+        String key = row + "#" + col;
+        //
+        if (!rowInbounds || !colInbounds) return 0;
+        if (grid[row][col] == 0) return 0;
+        if (!visited.add(key)) return 0; // If it's already added, no need to visit
+        int count = 1;
+        for (int idx = 0; idx < NO_DIRS; idx++) {
+            count += exploreArea(grid, row + DIRS[idx], col + DIRS[idx + 1], visited);
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         String[][] grid = {
                 {"W", "L", "W", "W", "W"},
@@ -181,6 +213,21 @@ public class IslandCount {
         };
         MethodsUtility.printArray(grid, grid.length, grid[0].length);
         System.out.println("Minimum Island Count - " + minimumIsland(grid)); // 1
+        System.out.println();
+        //
+        int[][] island = {
+                {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+                {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}
+        };
+        MethodsUtility.printArray(island, island.length, island[0].length);
+        System.out.println("Maximum Area of Island - " + maxAreaOfIsland(island)); // 1
+
     }
 
 }

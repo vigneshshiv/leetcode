@@ -13,7 +13,7 @@ public class FirstBadVersion {
 
     private static int firstBadVersion(int n) {
         if (n == 1) return 1;
-        int low = 0, mid = 0, high = n - 1;
+        int low = 0, mid = 0, high = n;
         while (low <= high) {
             mid = low + (high - low) / 2;
             if (isBadVersion(mid)) {
