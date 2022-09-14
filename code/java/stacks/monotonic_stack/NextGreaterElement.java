@@ -1,4 +1,4 @@
-package code.java.arrays;
+package code.java.stacks.monotonic_stack;
 
 import java.util.Arrays;
 import java.util.HashMap;

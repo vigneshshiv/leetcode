@@ -26,6 +26,19 @@ public class RemoveDuplicates {
         return head;
     }
 
+    private static LinkedListNode removeDuplicatesOptimal(LinkedListNode head) {
+        if (head == null) return null;
+        LinkedListNode current = head;
+        while (current.next != null) {
+            if (current.data == current.next.data) {
+                current.next = current.next.next;
+            } else {
+                current = current.next;
+            }
+        }
+        return head;
+    }
+
     /**
      * Time complexity: O(n)
      * Space complexity: O(n)
