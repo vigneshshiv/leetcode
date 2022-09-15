@@ -1,9 +1,28 @@
 package code.java.backtracking;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * https://leetcode.com/problems/valid-sudoku/
  */
 public class ValidSudoku {
+
+    private static boolean isValidSudokuEasy(char[][] board) {
+        Set<String> seen = new HashSet<>();
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                int num = board[r][c];
+                if (num != '.') {
+                    if (!seen.add(num + " in row " + r) || !seen.add(num + " in column " + c)
+                            || !seen.add(num + " in block " + (r / 3) + "-" + (c / 3))) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
     private static boolean isValidSudoku(char[][] board) {
         for (int row = 0; row < board.length; row++) {
@@ -70,7 +89,7 @@ public class ValidSudoku {
                 {'.','.','.','4','1','9','.','.','5'},
                 {'.','.','.','.','8','.','.','7','9'}
         };
-        boolean isValid = isValidSudoku(board);
+        boolean isValid = isValidSudokuEasy(board);
         System.out.println("IsValid - " + isValid);
         System.out.println();
         //
