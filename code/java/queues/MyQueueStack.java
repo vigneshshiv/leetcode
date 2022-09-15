@@ -2,20 +2,23 @@ package code.java.queues;
 
 import java.util.Stack;
 
+/**
+ * https://leetcode.com/problems/implement-queue-using-stacks/
+ */
 public class MyQueueStack<T> {
 
-    private Stack<T> stackNewest, stackOldest;
+    private Stack<T> front, rear;
 
     public MyQueueStack() {
-        this.stackNewest = new Stack<>();
-        this.stackOldest = new Stack<>();
+        this.front = new Stack<>();
+        this.rear = new Stack<>();
     }
 
     /**
      * Push onto stackNewest, which always has the newest element on top
      */
     public void add(T value) {
-        stackNewest.push(value);
+        rear.push(value);
     }
 
     /**
@@ -23,7 +26,7 @@ public class MyQueueStack<T> {
      */
     public T remove() {
         shiftStacks();
-        return stackOldest.pop();
+        return front.pop();
     }
 
     /**
@@ -31,29 +34,29 @@ public class MyQueueStack<T> {
      */
     public T peek() {
         shiftStacks();
-        return stackOldest.peek();
+        return front.peek();
     }
 
     /**
      * Print Stack Newest
      */
     public void printStackNewestPeek() {
-        if (stackNewest.isEmpty()){
+        if (front.isEmpty()){
             System.out.println("Stack Newest is Empty");
             return;
         }
-        System.out.println("Stack Newest Last element added - " + stackNewest.peek());
+        System.out.println("Stack Newest Last element added - " + front.peek());
     }
 
     /**
      * Print Stack Oldest
      */
     public void printStackOldestPeek() {
-        if (stackOldest.isEmpty()){
+        if (rear.isEmpty()){
             System.out.println("Stack Oldest is Empty");
             return;
         }
-        System.out.println("Stack Oldest Last element added - " + stackOldest.peek());
+        System.out.println("Stack Oldest Last element added - " + rear.peek());
     }
 
     /**
@@ -61,15 +64,15 @@ public class MyQueueStack<T> {
      * - Item will be reversed and stackOldest acts like a queue
      */
     private void shiftStacks() {
-        if (stackOldest.isEmpty()) {
-            while (!stackNewest.isEmpty()) {
-                stackOldest.push(stackNewest.pop());
+        if (front.isEmpty()) {
+            while (!rear.isEmpty()) {
+                front.push(rear.pop());
             }
         }
     }
 
     public int size() {
-        return stackNewest.size() + stackOldest.size();
+        return front.size() + rear.size();
     }
 
     public boolean isEmpty() {
@@ -91,7 +94,7 @@ public class MyQueueStack<T> {
         System.out.println();
         //
         System.out.println("Peek operation performed, Stack Oldest peek element should be 5 (first added) - ? " + queueStack.peek());
-        System.out.println("Stack Newest should be empty - Size - " + queueStack.stackNewest.size());
+        System.out.println("Stack Newest should be empty - Size - " + queueStack.front.size());
         System.out.println();
         //
         queueStack.add(2);
@@ -101,8 +104,8 @@ public class MyQueueStack<T> {
         System.out.println();
         //
         System.out.println("Remove operation performed, Stack removed item - " + queueStack.remove());
-        System.out.println("Stack Newest Size - " + queueStack.stackNewest.size());
-        System.out.println("Stack Oldest Size - " + queueStack.stackOldest.size());
+        System.out.println("Stack Newest Size - " + queueStack.front.size());
+        System.out.println("Stack Oldest Size - " + queueStack.rear.size());
         queueStack.printStackNewestPeek();
         queueStack.printStackOldestPeek();
     }
