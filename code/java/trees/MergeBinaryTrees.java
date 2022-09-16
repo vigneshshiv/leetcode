@@ -1,5 +1,8 @@
 package code.java.trees;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * https://leetcode.com/problems/merge-two-binary-trees/
  */
@@ -15,10 +18,34 @@ public class MergeBinaryTrees {
     }
 
     /**
-     * TODO
+     * BFS (Deque) approach, DFS is similar just use Stack (Deque) approach
+     *
      * https://leetcode.com/problems/merge-two-binary-trees/discuss/104331
      */
-
+    private static TreeNode mergeTreesIterative(TreeNode root1, TreeNode root2) {
+        if (root1 == null) return root2;
+        Deque<TreeNode[]> deque = new ArrayDeque<>();
+        deque.offer(new TreeNode[] {root1, root2});
+        while (!deque.isEmpty()) {
+            TreeNode[] N = deque.poll();
+            // If Right side is Null, then continue
+            if (N[1] == null) continue;;
+            // Merge Left and Right
+            N[0].data += N[1].data;
+            // If Left side is Null, then replace with Right side node
+            if (N[0].left == null) {
+                N[0].left = N[1].left;
+            } else {
+                deque.offer(new TreeNode[] {N[0].left, N[1].left});
+            }
+            if (N[0].right == null) {
+                N[0].right = N[1].right;
+            } else {
+                deque.offer(new TreeNode[] {N[0].right, N[1].right});
+            }
+        }
+        return root1;
+    }
 
     public static void main(String[] args) {
         TreeNode root1 = new TreeNode(1);
@@ -34,6 +61,10 @@ public class MergeBinaryTrees {
         //
         TreeNode result = mergeTrees(root1, root2);
         TreeNode.printPreOrderTraversal(result);
+        System.out.println();
+        result = mergeTreesIterative(root1, root2);
+        TreeNode.printPreOrderTraversal(result);
+        System.out.println();
     }
 
 }

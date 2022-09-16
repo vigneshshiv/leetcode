@@ -2,6 +2,7 @@ package code.java.trees;
 
 import java.time.temporal.Temporal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * https://leetcode.com/problems/binary-tree-level-order-traversal/
@@ -30,6 +31,27 @@ public class BinaryTreeLevelOrderTraversal {
         return result;
     }
 
+    private static List<List<Integer>> levelOrderRecursive(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        levelOrderRecursive(root, 0, result);
+        return result;
+    }
+
+    private static void levelOrderRecursive(TreeNode root, int level, List<List<Integer>> result) {
+        if (root == null) return;
+        List<Integer> sets = new ArrayList<>();
+        if (level + 1 > result.size()) {
+            result.add(sets);
+        }
+        sets = result.get(level);
+        sets.add(root.data);
+        levelOrderRecursive(root.left, level + 1, result);
+        levelOrderRecursive(root.right, level + 1, result);
+    }
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(9);
@@ -38,6 +60,10 @@ public class BinaryTreeLevelOrderTraversal {
         root.right.right = new TreeNode(7);
         List<List<Integer>> result = levelOrder(root);
         System.out.println(result);
+        result = levelOrderRecursive(root);
+        System.out.println(result);
+
+        System.exit(1);
         //
         root = new TreeNode(1);
         result = levelOrder(root);
