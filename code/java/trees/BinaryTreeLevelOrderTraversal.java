@@ -62,8 +62,6 @@ public class BinaryTreeLevelOrderTraversal {
         System.out.println(result);
         result = levelOrderRecursive(root);
         System.out.println(result);
-
-        System.exit(1);
         //
         root = new TreeNode(1);
         result = levelOrder(root);

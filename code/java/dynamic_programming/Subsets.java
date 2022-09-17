@@ -61,6 +61,24 @@ public class Subsets {
     }
 
     /**
+     * https://leetcode.com/problems/permutations/discuss/18239
+     */
+    private static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> subsets = new ArrayList<>();
+        subsetsBacktrack(subsets, new ArrayList<>(), nums, 0);
+        return subsets;
+    }
+
+    private static void subsetsBacktrack(List<List<Integer>> subsets, List<Integer> sets, int[] nums, int idx) {
+        subsets.add(new ArrayList<>(sets));
+        for (int i = idx; i < nums.length; i++) {
+            sets.add(nums[i]);
+            subsetsBacktrack(subsets, sets, nums, i + 1);
+            sets.remove(sets.size() - 1);
+        }
+    }
+
+    /**
      * Subsets Duplicates
      */
     private static List<List<Integer>> getSubsetsOfIntDuplicates(int[] numbers) {
@@ -100,6 +118,9 @@ public class Subsets {
         int[] numbers = {1, 2, 3};
         List<List<Integer>> subsetsOfInt = getSubsetsOfInt(numbers, 0);
         System.out.println("Recursive - " + subsetsOfInt.toString());
+        //
+        subsetsOfInt = subsets(numbers);
+        System.out.println("BackTrack - " + subsetsOfInt.toString());
         // Iterative
         subsetsOfInt = getSubsetsOfInt(numbers);
         System.out.println("Iterative - " + subsetsOfInt.toString());
