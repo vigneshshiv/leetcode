@@ -48,6 +48,23 @@ public class NextRightPointersSet {
         return root;
     }
 
+    private static Node levelOrderIterativeOptimal(Node root) {
+        if (root == null || root.left == null) return root;
+        Node node = root;
+        while (node != null && node.left != null) {
+            Node next = node.left;
+            while (node != null) {
+                node.left.next = node.right;
+                if (node.next != null) {
+                    node.right.next = node.next.left;
+                }
+                node = node.next;
+            }
+            node = next;
+        }
+        return root;
+    }
+
     private static List<String> levelOrder(Node root) {
         List<String> result = new ArrayList<>();
         if (root == null) return result;
