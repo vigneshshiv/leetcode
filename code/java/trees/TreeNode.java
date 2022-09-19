@@ -119,7 +119,7 @@ public class TreeNode {
         int rightHeight = checkHeight(node.right);
         if (rightHeight == Integer.MIN_VALUE) return Integer.MIN_VALUE;
         if (Math.abs(leftHeight - rightHeight) > 1) return Integer.MIN_VALUE;
-        else return Math.max(leftHeight, rightHeight) + 1;
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 
     /**
