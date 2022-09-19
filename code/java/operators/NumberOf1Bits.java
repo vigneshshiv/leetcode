@@ -44,17 +44,24 @@ public class NumberOf1Bits {
         return ones;
     }
 
+    private static int hammingWeightOptimal(int n) {
+        return Integer.bitCount(n);
+    }
+
     public static void main(String[] args) {
         BiConsumer<Integer, Integer> logger = (num, onesCount) -> System.out.println("Num - " + num + ", Ones Count - " + onesCount);
         //
         int num = 3;
         logger.accept(num, hammingWeight(num));
+        logger.accept(num, hammingWeightOptimal(num));
         //
         num = 10;
         logger.accept(num, hammingWeight(num));
+        logger.accept(num, hammingWeightOptimal(num));
         //
         num = 15;
         logger.accept(num, hammingWeight(num));
+        logger.accept(num, hammingWeightOptimal(num));
     }
 
 }

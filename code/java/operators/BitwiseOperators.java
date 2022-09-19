@@ -83,6 +83,8 @@ public class BitwiseOperators {
     }
 
     /**
+     * https://leetcode.com/problems/power-of-two/
+     *
      * How to find the number is Power of 2
      *
      *  #1 n = 5
@@ -100,7 +102,7 @@ public class BitwiseOperators {
      */
     static void isPowerOfTwo(int n) {
         // n & (n - 1) never have a 1 bit in the same place.
-        boolean powerOfTwo = n != 0 & (n & (n - 1)) == 0;
+        boolean powerOfTwo = n > 0 & (n & (n - 1)) == 0;
         System.out.println("Given number - " + n + " is power of 2 - " + powerOfTwo);
     }
 
