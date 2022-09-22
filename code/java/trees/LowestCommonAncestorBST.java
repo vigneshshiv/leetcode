@@ -7,6 +7,19 @@ import java.util.Stack;
  */
 public class LowestCommonAncestorBST {
 
+    private static int findLowestCommonAncestorOptimal(TreeNode root, int x, int y) {
+        while (root != null) {
+            if (x > root.data && y > root.data) {
+                root = root.right;
+            } else if (x < root.data && y < root.data) {
+                root = root.left;
+            } else {
+                return root.data;
+            }
+        }
+        return -1;
+    }
+
     /**
      * https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/discuss/64963
      */
@@ -62,15 +75,23 @@ public class LowestCommonAncestorBST {
         root.right.right = new TreeNode(9);
         int commonAncestor = findLowestCommonAncestorBSTIterative(root, 0, 5);
         System.out.println("Common Ancestor for 0 & 5 - " + commonAncestor);
+        commonAncestor = findLowestCommonAncestorOptimal(root, 0, 5);
+        System.out.println("Optimal approach - Common Ancestor for 0 & 5 - " + commonAncestor);
         //
         commonAncestor = findLowestCommonAncestorBSTIterative(root, 2, 8);
         System.out.println("Common Ancestor for 2 & 8 - " + commonAncestor);
+        commonAncestor = findLowestCommonAncestorOptimal(root, 2, 8);
+        System.out.println("Optimal approach - Common Ancestor for 2 & 8 - " + commonAncestor);
         //
         commonAncestor = findLowestCommonAncestorBST(root, 2, 3);
         System.out.println("Common Ancestor for 2 & 3 - " + commonAncestor);
+        commonAncestor = findLowestCommonAncestorOptimal(root, 2, 3);
+        System.out.println("Optimal approach - Common Ancestor for 2 & 3 - " + commonAncestor);
         //
         commonAncestor = findLowestCommonAncestorBST(root, 7, 9);
         System.out.println("Common Ancestor for 7 & 9 - " + commonAncestor);
+        commonAncestor = findLowestCommonAncestorOptimal(root, 7, 9);
+        System.out.println("Optimal approach - Common Ancestor for 7 & 9 - " + commonAncestor);
     }
 
 }
