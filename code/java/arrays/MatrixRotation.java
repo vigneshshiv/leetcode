@@ -4,6 +4,9 @@ import code.java.utils.MethodsUtility;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode.com/problems/rotate-image/
+ */
 public class MatrixRotation {
 
     /**
@@ -42,8 +45,15 @@ public class MatrixRotation {
         });
         System.out.println("Matrix input - ");
         MethodsUtility.printArray(matrix, rows, columns);
-        //
         rotate(matrix, rows, columns);
+        System.out.println();
+        //
+        int[][] grid = {
+                {5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}
+        };
+        System.out.println("Matrix input - ");
+        MethodsUtility.printArray(grid, rows, columns);
+        rotate(grid, rows, columns);
     }
 
 }
