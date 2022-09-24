@@ -39,6 +39,7 @@ public class DuplicateNumber {
      * Given a list of integers where all integers occur odd times, expect one which occur even time. Find out that integer.
      *
      * Solution - Slow & Fast approach similar to Linked List Cycle detection
+     *  Inherently called, Floyd's Tortoise and Hare (cycle detection)
      *
      * Time: O(n) time, where n is the number of elements in the array
      * Space: O(1) space, no extra space allocated

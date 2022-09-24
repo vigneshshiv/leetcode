@@ -33,7 +33,7 @@ public class SqrtNumber {
             if (guess <= n / guess && (guess + 1) > n / (guess + 1)) { // Found the Result
                 return guess;
             } else if (guess > n / guess) { // Keep check left
-                max = guess;
+                max = guess; // <guess - 1> also works
             } else {
                 min = guess + 1;
             }
