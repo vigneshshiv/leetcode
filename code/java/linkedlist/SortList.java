@@ -28,7 +28,7 @@ public class SortList {
             head = head.next.next;
         }
         LinkedListNode mid = midPrev.next;
-        // Cut the reference to the next pointer (mid), so that head remains froms start to mid.
+        // Cut the reference to the next pointer (mid), so that head remains from start to mid.
         midPrev.next = null;
         return mid;
     }

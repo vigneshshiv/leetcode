@@ -57,6 +57,26 @@ public class AddTwoNumbers {
         return head.next;
     }
 
+    private static LinkedListNode addTwoNumbersReverse(LinkedListNode l1, LinkedListNode l2) {
+        LinkedListNode head = new LinkedListNode();
+        addTwoNumbersReverse(head, 0, l1, l2);
+        return head.next;
+    }
+
+    private static void addTwoNumbersReverse(LinkedListNode head, int carry, LinkedListNode l1, LinkedListNode l2) {
+        if (carry == 0 && l1 == null && l2 == null) return;
+        int sum = carry;
+        if (l1 != null) {
+            sum += l1.data;
+            l1 = l1.next;
+        }
+        if (l2 != null) {
+            sum += l2.data;
+            l2 = l2.next;
+        }
+        head.next = new LinkedListNode(sum % 10);
+        addTwoNumbersReverse(head.next, sum / 10, l1, l2);
+    }
 
     public static void main(String[] args) {
         LinkedListNode root1 = LinkedListNode.createNodes(new int[] {2, 4, 3});
@@ -65,12 +85,16 @@ public class AddTwoNumbers {
         LinkedListNode.printData(result);
         result = addTwoNumbersOptimal(root1, root2);
         LinkedListNode.printData(result);
+        result = addTwoNumbersReverse(root1, root2);
+        LinkedListNode.printData(result);
         //
         root1 = LinkedListNode.createNodes(new int[] {0});
         root2 = LinkedListNode.createNodes(new int[] {0});
         result = addTwoNumbers(root1, root2);
         LinkedListNode.printData(result);
         result = addTwoNumbersOptimal(root1, root2);
+        LinkedListNode.printData(result);
+        result = addTwoNumbersReverse(root1, root2);
         LinkedListNode.printData(result);
         //
         root1 = LinkedListNode.createNodes(new int[] {9, 9, 9, 9, 9, 9, 9});
@@ -79,12 +103,16 @@ public class AddTwoNumbers {
         LinkedListNode.printData(result);
         result = addTwoNumbersOptimal(root1, root2);
         LinkedListNode.printData(result);
+        result = addTwoNumbersReverse(root1, root2);
+        LinkedListNode.printData(result);
         //
         root1 = LinkedListNode.createNodes(new int[] {9, 9, 1});
         root2 = LinkedListNode.createNodes(new int[] {1});
         result = addTwoNumbers(root1, root2);
         LinkedListNode.printData(result);
         result = addTwoNumbersOptimal(root1, root2);
+        LinkedListNode.printData(result);
+        result = addTwoNumbersReverse(root1, root2);
         LinkedListNode.printData(result);
     }
 

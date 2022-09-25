@@ -40,3 +40,6 @@ https://leetcode.com/problems/strobogrammatic-number-ii/
 https://leetcode.com/problems/the-most-similar-path-in-a-graph/
 https://leetcode.com/problems/valid-word-abbreviation/
 https://leetcode.com/problems/walls-and-gates/
+https://leetcode.com/problems/divide-chocolate/
+https://leetcode.com/problems/minimize-max-distance-to-gas-station/
+https://leetcode.com/problems/koko-eating-bananas/solution/
