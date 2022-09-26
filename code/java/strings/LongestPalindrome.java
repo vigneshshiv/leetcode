@@ -15,11 +15,11 @@ public class LongestPalindrome {
         Set<Character> store = new HashSet<>();
         for (char c : s.toCharArray()) {
             if (!store.add(c)) {
-                count += 1;
+                count += 2;
                 store.remove(c);
             }
         }
-        return !store.isEmpty() ? count * 2 + 1 : count * 2;
+        return !store.isEmpty() ? count + 1 : count;
     }
 
     private static int longestPalindromeOptimal(String s) {
