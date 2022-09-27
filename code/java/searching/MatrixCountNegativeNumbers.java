@@ -38,7 +38,7 @@ public class MatrixCountNegativeNumbers {
                 low = mid + 1;
             }
         }
-        return low >= grid[row].length ? 0 : grid[row].length - low;
+        return low == grid[row].length ? 0 : grid[row].length - low;
     }
 
     public static void main(String[] args) {
