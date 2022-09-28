@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Implements a trie, store input words, finds words with a given prefix tree
+ *
+ * https://leetcode.com/problems/implement-trie-prefix-tree/
  */
 public class Trie {
 
@@ -27,7 +29,7 @@ public class Trie {
     }
 
     /* Checks whether a trie contains a string with the prefix passed in as argument */
-    public boolean contains(String prefix) {
+    public boolean contains(String prefix, boolean startsWith) {
         TrieNode lastNode = root;
         for (char c : prefix.toCharArray()) {
             lastNode = lastNode.getChild(c);
@@ -35,7 +37,7 @@ public class Trie {
                 return false;
             }
         }
-        return lastNode.terminates();
+        return startsWith ? true : lastNode.terminates();
     }
 
     public TrieNode getRoot() {

@@ -47,7 +47,10 @@ public class BrowserHistoryByLinkedList {
             return current.url;
         }
         current = (last + steps > size/2) ? getPageFromTail(size - (last + steps), true) : getPageFromHead(steps, false);
-        last += steps; // Update last accessed page index
+        // last += steps; // Update last accessed page index
+        if (steps < last) {
+            last += steps;
+        }
         return current.url;
     }
 
@@ -86,7 +89,8 @@ public class BrowserHistoryByLinkedList {
     public static void main(String[] args) {
         // test1();
         // test2();
-        test3();
+        // test3();
+        test4();
     }
 
     private static void test1() {
@@ -149,6 +153,35 @@ public class BrowserHistoryByLinkedList {
         browserHistory.visit("fllnc.com");
         browserHistory.visit("fs.com");
         System.out.println("7 steps back - " + browserHistory.back(7));
+    }
+
+    private static void test4() {
+        BrowserHistoryByLinkedList browserHistory = new BrowserHistoryByLinkedList("momn.com");
+        browserHistory.visit("bx.com");
+        browserHistory.visit("bjyfmln.com");
+        System.out.println("3 steps back - " + browserHistory.back(3));
+        browserHistory.visit("ijtrqk.com");
+        browserHistory.visit("dft.com");
+        System.out.println("10 steps back - " + browserHistory.back(10));
+        System.out.println("10 steps forward - " + browserHistory.forward(10));
+        browserHistory.visit("yc.com");
+        browserHistory.visit("yhl.com");
+        browserHistory.visit("xynxvix.com");
+        browserHistory.visit("izfscdv.com");
+        browserHistory.visit("cdenhm.com");
+        browserHistory.visit("ocgcjz.com");
+        System.out.println("5 steps forward - " + browserHistory.forward(5));
+        System.out.println("5 steps forward - " + browserHistory.forward(5));
+        browserHistory.visit("gtd.com");
+        System.out.println("9 steps back - " + browserHistory.back(9));
+        browserHistory.visit("hfeour.com");
+        browserHistory.visit("ghmh.com");
+        browserHistory.visit("nnm.com");
+        browserHistory.visit("knm.com");
+        System.out.println("4 steps forward - " + browserHistory.forward(4));
+        browserHistory.visit("cbtg.com");
+        browserHistory.visit("acyvwod.com");
+        browserHistory.visit("mydr.com");
     }
 
 }
