@@ -2,6 +2,7 @@ package code.java.strings;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -32,6 +33,44 @@ public class PhoneLetterPad {
         return result;
     }
 
+    private static Map<Character, String> digitToChar = Map.of(
+            '2', "abc",
+            '3', "def",
+            '4', "ghi",
+            '5', "jkl",
+            '6', "mno",
+            '7', "pqrs",
+            '8', "tuv",
+            '9', "wxyz"
+    );
+
+    /**
+     * https://github.com/neetcode-gh/leetcode/blob/main/java/17-Letter-Combinations-of-a-Phone-Number.java
+     */
+    private static List<String> letterCombinationsEasy(String prefix, String digits) {
+        if (digits.length() == 0) {
+            return emptyList.get();
+        }
+        List<String> result = new ArrayList();
+        String cur = "";
+        backtrack(digits, result, cur, 0);
+        return result;
+    }
+
+    private static void backtrack(String digits, List<String> result, String cur, int index) {
+        if (cur.length() == digits.length()) {
+            result.add(cur);
+            return;
+        } else if (index >= digits.length()) {
+            return;
+        } else {
+            String digit = digitToChar.get(digits.charAt(index));
+            for (char c : digit.toCharArray()) {
+                backtrack(digits, result, cur + c, index + 1);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         String digits = "7";
         List<String> result = letterCombinations("", digits);
@@ -43,6 +82,8 @@ public class PhoneLetterPad {
         //
         digits = "456";
         result = letterCombinations("", digits);
+        System.out.println("Digits - " + digits + ", Combinations - " + result);
+        result = letterCombinationsEasy("", digits);
         System.out.println("Digits - " + digits + ", Combinations - " + result);
         //
         digits = "78";
