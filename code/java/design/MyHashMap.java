@@ -11,15 +11,27 @@ import java.util.List;
  */
 public class MyHashMap {
 
+    // Initial capacity is set to 16
     private static final int INITIAL_CAPACITY = 1 << 4;
+
+    // Maximum capcity is set to 65536
     private static final int MAXIMUM_CAPACITY = 1 << 16;
+
+    // Load factor range is 75% for increase capacity
     private static final float LOAD_FACTOR = 0.75f;
 
     private ListNode[] arr;
 
     private int capacity = INITIAL_CAPACITY;
+
+    // Threshold range for initial capacity (16) is set to 12.
+    // When the Hashmap is reaches size of 12, it doubles it size and rehashes the elements
     private int threshold = (int) (INITIAL_CAPACITY * LOAD_FACTOR); // Default
+
+    // Shrink threshold for initial is set to 0, it will change when the capacity is increased.
     private int shrink_threshold = 0;
+
+    // Size of the linked list
     private int size = 0;
 
     public MyHashMap() {
@@ -28,8 +40,11 @@ public class MyHashMap {
 
     /* Value will always be non-negative */
     public void put(int key, int value) {
+        // Get hashcode for the key and operate on the array
         int _key = hash(key);
         ListNode node = arr[_key];
+        // If the hashcode is already found in the array
+        // Then add the current element in the linked list chain
         if (node != null) {
             node.add(key, value);
         } else {
@@ -46,6 +61,7 @@ public class MyHashMap {
     public int get(int key) {
         int _key = hash(key);
         ListNode node = arr[_key];
+        // Based on the hashcode for the given key, check the elements in the linked list chain
         Node item;
         if (node == null || (item = node.find(key)) == null) {
             return -1;
@@ -58,6 +74,7 @@ public class MyHashMap {
         int _key = hash(key);
         ListNode node = arr[_key];
         if (node == null) return;
+        // Remove key from the linked list chain
         node.remove(key);
         // If head is null, then remove that item from array
         if (node.head == null) {
@@ -69,28 +86,37 @@ public class MyHashMap {
         }
     }
 
-    /* Get size */
+    /* Stored elements size */
     public int size() {
         return size;
     }
 
-    /* Hash key function */
+    /* Simple HashCode function */
     private int hash(int key) {
         return key % capacity;
     }
 
+    /* Table doubling or Hashmap increase it's capacity function */
     private void grow() {
+        // Bit shifting << 1, since it's all capacity is power of 2, shifting 1 to left, doubled it's size.
         if ((capacity <<= 1) >= MAXIMUM_CAPACITY) {
             capacity = MAXIMUM_CAPACITY;
         }
         ListNode[] oldArr = arr;
+        // Initialized new array capacity with doubled it size
         ListNode[] newArr = new ListNode[capacity];
         int count = 0;
         for (int i = 0; i < oldArr.length; i++) {
             ListNode node = oldArr[i];
+            /**
+             * Only check if the element is Not null,
+             *  few of remove operation causes remove the element from the array, if the HEAD is null
+             */
             if (node != null) {
+                // Elements formed in Linked list so using HEAD we can traverse through the elements.
                 Node current = node.head;
                 while (current != null) {
+                    // Re-hashes the existing key for the allocated size
                     int _key = hash(current.key);
                     node = newArr[_key]; // New Key check
                     if (node != null) {
@@ -110,7 +136,9 @@ public class MyHashMap {
         size = count; // Actual size
     }
 
+    /* Table reducing to half, is same as table grow function */
     private void shrink() {
+        // Bit shifting to right >> 1, reduce half the size for the current capacity
         if ((capacity >>= 1) <= INITIAL_CAPACITY) {
             capacity = INITIAL_CAPACITY;
         }
@@ -145,6 +173,7 @@ public class MyHashMap {
         size = count;
     }
 
+    /* Simple Node class to store the key and value, pointer to the next node */
     private class Node {
         int key, val;
         Node next;
@@ -160,6 +189,11 @@ public class MyHashMap {
         }
     }
 
+    /**
+     * Linked List Head and Tail node reference for faster adds and remove elements.
+     *
+     * Head and Tail becomes easy to handle operations for add, remove elements
+     */
     private class ListNode {
         private Node head;
         private Node tail;
@@ -172,6 +206,9 @@ public class MyHashMap {
             size += 1;
         }
 
+        /**
+         * Standard linked list operations for Add and update
+         */
         private void add(int key, int val) {
             boolean updateNode = update(key, val);
             if (!updateNode) {
@@ -204,6 +241,7 @@ public class MyHashMap {
             return current;
         }
 
+        /* Changing the linked list node pointers when removing the element */
         private void remove(int key) {
             if (head == null) return;
             if (head.key == key) {

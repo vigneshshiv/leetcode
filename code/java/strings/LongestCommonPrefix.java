@@ -27,13 +27,42 @@ public class LongestCommonPrefix {
         return sb.toString();
     }
 
+    private static String longestCommonPrefixSorting(String[] strs) {
+        int n = strs.length;
+        if (n == 0) return "";
+        // Sorting provides lexicographic order of strings.
+        Arrays.sort(strs);
+        String first = strs[0], last = strs[n - 1];
+        int i = 0;
+        while (i < first.length()) {
+            if (first.charAt(i) == last.charAt(i)) {
+                i += 1;
+            } else {
+                break;
+            }
+        }
+        return i == 0 ? "" : first.substring(0, i);
+    }
+
+    /**
+     * Time complexity: O(n * s), n - # of elements in the array, s - length of the substring
+     * Space complexity: O(1) space
+     */
     private static String longestCommonPrefixOptimal(String[] strs) {
         if (strs.length == 0) return "";
-        String pre = strs[0];
-        for (int i = 1; i < strs.length; i++)
-            while (!strs[i].startsWith(pre))
-                pre = pre.substring(0, pre.length() - 1);
-        return pre;
+        String word = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            // Keep minimize the prefix word (previous) which match starting position with the current word.
+            while (!strs[i].startsWith(word)) {
+                word = word.substring(0, word.length() - 1);
+            }
+            // If word has no matching prefix with the current word, then there is no common prefix,
+            // which implies there won't be any common prefix in the subsequent non-processed words.
+            if ("".equals(word)) {
+                return "";
+            }
+        }
+        return word;
     }
 
     public static void main(String[] args) {

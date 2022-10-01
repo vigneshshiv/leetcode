@@ -1,4 +1,4 @@
-package code.java.arrays;
+package code.java.graphs;
 
 import code.java.utils.MethodsUtility;
 

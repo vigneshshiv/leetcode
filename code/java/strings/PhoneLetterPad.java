@@ -52,21 +52,20 @@ public class PhoneLetterPad {
             return emptyList.get();
         }
         List<String> result = new ArrayList();
-        String cur = "";
-        backtrack(digits, result, cur, 0);
+        backtrack(digits, result, prefix, 0);
         return result;
     }
 
-    private static void backtrack(String digits, List<String> result, String cur, int index) {
-        if (cur.length() == digits.length()) {
-            result.add(cur);
+    private static void backtrack(String digits, List<String> result, String prefix, int index) {
+        if (prefix.length() == digits.length()) {
+            result.add(prefix);
             return;
         } else if (index >= digits.length()) {
             return;
         } else {
             String digit = digitToChar.get(digits.charAt(index));
             for (char c : digit.toCharArray()) {
-                backtrack(digits, result, cur + c, index + 1);
+                backtrack(digits, result, prefix + c, index + 1);
             }
         }
     }
