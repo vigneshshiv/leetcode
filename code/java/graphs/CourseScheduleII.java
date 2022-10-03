@@ -11,87 +11,52 @@ public class CourseScheduleII {
      * Not a valid answer
      */
     private static int[] findOrderDFS(int numCourses, int[][] prerequisites) {
-        int[] empty = new int[] {0};
-        if (prerequisites.length == 0 || prerequisites[0].length == 0) return empty;
-        Map<Integer, List<Integer>> courses = buildPrerequisites(prerequisites);
+        int[] empty = {};
+        Map<Integer, List<Integer>> courses = buildPrerequisites(numCourses, prerequisites);
         List<Integer> result = new ArrayList<>();
-        Set<Integer> visited = new HashSet<>();
-        Set<Integer> cycle = new HashSet<>();
-        for (Integer course : courses.keySet()) {
-            if (!dfs(courses, course, visited, cycle, result)) {
+        // States: 0 - UNVISITED, 1 - VISITING, 2 - VISITED
+        int[] visited = new int[numCourses];
+        for (int idx = 0; idx < numCourses; idx++) {
+            if (!dfs(courses, idx, visited, result)) {
                 return empty;
             }
         }
         return !result.isEmpty() ? result.stream().mapToInt(e -> e).toArray() : empty;
     }
 
-    private static boolean dfs(Map<Integer, List<Integer>> courses, int course, Set<Integer> visited, Set<Integer> cycle,
-                               List<Integer> result) {
+    private static boolean dfs(Map<Integer, List<Integer>> courses, int course, int[] visited, List<Integer> result) {
+        int state = visited[course];
         // Already visited, found a cycle
-        if (cycle.contains(course)) return false;
+        if (state == 1) return false;
         // Visited before, no need to traverse the same edges again
-        if (visited.contains(course)) return true;
-        cycle.add(course);
+        if (state == 2) return true;
+        visited[course] = 1;
         // Check the prerequisites graph
         List<Integer> prerequisites = courses.get(course);
         if (Objects.nonNull(prerequisites)) {
             for (int prereq_course : prerequisites) {
-                if (!dfs(courses, prereq_course, visited, cycle, result)) {
+                if (!dfs(courses, prereq_course, visited, result)) {
                     return false;
                 }
             }
         }
-        cycle.remove(course);
-        visited.add(course);
-        result.add(course);
+        visited[course] = 2;
+        result.add(0, course);
         return true;
     }
 
-    private static Map<Integer, List<Integer>> buildPrerequisites(int[][] prerequisites) {
+    private static Map<Integer, List<Integer>> buildPrerequisites(int numCourses, int[][] prerequisites) {
         Map<Integer, List<Integer>> courses = new HashMap<>();
+        for (int idx = 0; idx < numCourses; idx++) {
+            courses.put(idx, new ArrayList<>());
+        }
         for (int[] course : prerequisites) {
             int start = course[0], end = course[1];
-            List<Integer> dependencies = courses.getOrDefault(start, new ArrayList<>());
-            dependencies.add(end);
-            courses.put(start, dependencies);
-            //
-            courses.putIfAbsent(end, null);
+            List<Integer> dependencies = courses.getOrDefault(end, new ArrayList<>());
+            dependencies.add(start);
+            courses.put(end, dependencies);
         }
         return courses;
-    }
-
-    /**
-     * Reference <code>BuildOrderEdgeRemoval</code>
-     */
-    private static int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] empty = new int[] {};
-        if (prerequisites.length == 0 || prerequisites[0].length == 0) return empty;
-        // In-degree courses
-        int[] dependency = new int[numCourses];
-        Map<Integer, List<Integer>> courses = buildPrerequisites(prerequisites, dependency);
-        // Result order
-        int[] order = new int[numCourses];
-        Arrays.fill(order, -1);
-        // build non dependency courses list first and find offset
-        int offset = addNonDependentCourses(order, dependency, 0);
-        int toBeProcessed = 0;
-        while (toBeProcessed < numCourses) {
-            // Current courses list
-            List<Integer> list = courses.get(toBeProcessed);
-            if (Objects.nonNull(list)) {
-                // return null; // Circular dependency;
-                // Decrement dependencies
-                list.stream().forEach(e -> dependency[e] -= 1);
-                // Add finished courses
-                for (int finished_course : list) {
-                    if (dependency[finished_course] == 0) {
-                        order[offset++] = finished_course;
-                    }
-                }
-            }
-            toBeProcessed++;
-        }
-        return order;
     }
 
     /**
@@ -110,18 +75,8 @@ public class CourseScheduleII {
         return courses;
     }
 
-    private static int addNonDependentCourses(int[] order, int[] dependency, int offset) {
-        for (int course : dependency) {
-            if (course == 0 && order[course] == -1) {
-                order[offset++] = course;
-            }
-        }
-        return offset;
-    }
-
     private static int[] findOrderQueueApproach(int numCourses, int[][] prerequisites) {
-        int[] empty = new int[] {};
-        if (prerequisites.length == 0 || prerequisites[0].length == 0) return empty;
+        int[] empty = {};
         // In-degree courses
         int[] dependency = new int[numCourses];
         Map<Integer, List<Integer>> courses = buildPrerequisites(prerequisites, dependency);
@@ -135,10 +90,10 @@ public class CourseScheduleII {
                 q.offer(i);
             }
         }
-        int toBeProcessed = 0;
+        int visited = 0;
         while (!q.isEmpty()) {
             int course = q.poll();
-            order[toBeProcessed++] = course;
+            order[visited++] = course;
             if (courses.containsKey(course)) {
                 for (int next : courses.get(course)) {
                     dependency[next] -= 1;
@@ -148,7 +103,7 @@ public class CourseScheduleII {
                 }
             }
         }
-        return (toBeProcessed == numCourses) ? order : empty;
+        return (visited == numCourses) ? order : empty;
     }
 
     public static void main(String[] args) {
@@ -163,13 +118,23 @@ public class CourseScheduleII {
         prerequisites = new int[][] {
                 {1, 0}, {2, 0}, {3, 1}, {3, 2}
         };
-        result = findOrder(numCourses, prerequisites);
-        System.out.println("Iteration - " + Arrays.toString(result));
+        result = findOrderDFS(numCourses, prerequisites);
+        System.out.println("DFS - " + Arrays.toString(result));
         result = findOrderQueueApproach(numCourses, prerequisites);
         System.out.println("Queue - " + Arrays.toString(result));
         //
         numCourses = 1;
-        prerequisites = new int[][] { {} };
+        prerequisites = new int[][] {};
+        result = findOrderDFS(numCourses, prerequisites);
+        System.out.println(Arrays.toString(result));
+        //
+        numCourses = 2;
+        prerequisites = new int[][] { {0, 1} };
+        result = findOrderDFS(numCourses, prerequisites);
+        System.out.println(Arrays.toString(result));
+        //
+        numCourses = 2;
+        prerequisites = new int[][] {};
         result = findOrderDFS(numCourses, prerequisites);
         System.out.println(Arrays.toString(result));
     }
