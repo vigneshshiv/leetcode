@@ -19,21 +19,23 @@ public class MissingNumber {
      * Space complexity: O(1)
      */
     private static int missingNumber(int[] arr) {
-        int i = 0;
-        while (i < arr.length) {
-            if (arr[i] < arr.length && arr[i] != i) {
-                Sort.swap(arr, arr[i], i);
-            } else {
-                i++;
-            }
-        }
+        int n = arr.length;
+        Arrays.sort(arr);
         // Search for first missing number
-        for (int idx = 0; idx < arr.length; idx++) {
-            if (arr[idx] != idx) {
-                return idx;
+        if (arr[0] != 0) return 0;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] != i) {
+                return i;
             }
         }
-        return arr.length;
+        return n;
+    }
+
+    private static int missingNumberMath(int[] arr) {
+        int n = arr.length;
+        int sum = 0;
+        for (int x : arr) sum += x;
+        return (n * (n + 1) / 2) - sum;
     }
 
     /**
@@ -56,11 +58,12 @@ public class MissingNumber {
      * Space complexity: O(1)
      */
     private static int missingNumberOptimal(int[] arr) {
-        int x = 0;
-        for (int i = 0; i < arr.length; i++) {
-            x = x ^ arr[i] ^ (i + 1);
+        int n = arr.length;
+        int ans = n;
+        for (int i = 0; i < n; i++) {
+            ans ^= (arr[i] ^ i);
         }
-        return x;
+        return ans;
     }
 
     /**

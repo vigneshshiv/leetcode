@@ -19,8 +19,11 @@ public class LinkedListReverse {
         LinkedListNode current = head;
         //
         while (current != null) {
+            // Before changing current ptr next node, keep reference copy
             LinkedListNode next = current.next;
+            // Change the current node next ptr to prev node
             current.next = prev;
+            // For the next iteration, keep current as previous node
             prev = current;
             current = next;
         }
@@ -40,8 +43,14 @@ public class LinkedListReverse {
      */
     private static LinkedListNode reverseList(LinkedListNode head, LinkedListNode prev) {
         if (head == null) return prev;
+        // Reference copy of next node
         LinkedListNode next = head.next;
+        // Set current node next ptr to previous node
         head.next = prev;
+        // Pass next node as current, and current node as prev to the next recursive call
+        // e.g. 1 -> 2 -> 3
+        // Current node is 1, and next node is 2
+        // For the next recursive call, passing current node 2 and and previous as 1, so that 1 <- 2
         return reverseList(next, head);
     }
 

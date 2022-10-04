@@ -1,11 +1,25 @@
 package code.java.strings;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.BiConsumer;
 
 /**
  * https://leetcode.com/problems/valid-anagram/
  */
 public class ValidAnagram {
+
+    private static boolean isAnagramEasy(String s, String t) {
+        char[] s_chars = s.toCharArray();
+        char[] t_chars = t.toCharArray();
+        // Sorting with char array
+        Arrays.sort(s_chars);
+        Arrays.sort(t_chars);
+        // Convert to string
+        s = new String(s_chars);
+        t = new String(t_chars);
+        return s.equals(t);
+    }
 
     private static boolean isAnagram(String s, String t) {
         int[] chars = new int[26];

@@ -44,10 +44,18 @@ public class BinaryTreePreOrderTraversal {
         List<Integer> result = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
         while (root != null) {
+            // Keeping add top and left node values, while keep traversing left
             result.add(root.data);
+            // If Root has right subtree, add it to stack
             if (root.right != null) {
                 stack.push(root.right);
             }
+            //   1
+            //  / \
+            // 2   3
+            // If 1 & 2 is added to result, Stack is only having 3
+            // If current node is 2, the 2's left is null,
+            // So Pops out stack top, i.e, current node's (2's) parent (1) right subtree
             root = root.left;
             if (root == null && !stack.isEmpty()) {
                 root = stack.pop();
