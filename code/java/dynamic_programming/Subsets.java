@@ -48,12 +48,24 @@ public class Subsets {
      * Space complexity: O(n * 2^n), where n is space taken by each subset, 2^n is the total subset
      */
     private static List<List<Integer>> getSubsetsOfInt(int[] numbers) {
-        List<List<Integer>> subsets = empty2DListInt.get();
+        // Input: nums - [1, 2]
+        List<List<Integer>> subsets = new ArrayList<>();
+        List<Integer> sets = new ArrayList<>();
+        // Initial - { [] }
+        subsets.add(sets);
         for (int num : numbers) {
+            // num - 1 & n is 1 ( subsets - { [] } )
+            // num - 2 & n is 2 ( subsets - { [], [1] } )
             int n = subsets.size();
             for (int i = 0; i < n; i++) {
+                // num - 1 & i = 0, []
+                // num - 2 & i = 0, []
+                // num - 2 & i = 1, [1]
                 List<Integer> item = new ArrayList<>(subsets.get(i));
                 item.add(num);
+                // num - 1 & i = 0, { [], [1] }
+                // num - 2 & i = 0, { [], [1], [2] }
+                // num - 2 & i = 1, { [], [1], [2], [1, 2] } -- Final Result
                 subsets.add(item);
             }
         }
@@ -70,10 +82,24 @@ public class Subsets {
     }
 
     private static void subsetsBacktrack(List<List<Integer>> subsets, List<Integer> sets, int[] nums, int idx) {
+        // index 0, [] added to result { [] }
+        // index 1, { [], [1] }
+        // index 2, { [], [1], [1, 2] } - index 2 is out of range, so it won't enter into loop
         subsets.add(new ArrayList<>(sets));
         for (int i = idx; i < nums.length; i++) {
+            // index 0, sets add [1]
+            // index 1, sets add, [1, 2]
+            /*
+             * index 1, (actually index 0 call stack, for loop can begin), so it's add [2] in sets
+             * So, it calls subsets again and it to result set
+             * Finally, result set is like - { [], [1], [1, 2], [2] }
+             */
             sets.add(nums[i]);
+            // index 0 - calling subsets - { [] }, sets - [1], index - 1
+            // index 1 - calling subsets - { [], [1] }, sets - [1, 2], index 2
             subsetsBacktrack(subsets, sets, nums, i + 1);
+            // index 1, sets removed it's last element 2, so sets [1], for loops end with 1
+            // index 0, sets removed it's last element 1, so sets [], it can continue with index 1
             sets.remove(sets.size() - 1);
         }
     }
@@ -122,7 +148,8 @@ public class Subsets {
         subsetsOfInt = subsets(numbers);
         System.out.println("BackTrack - " + subsetsOfInt.toString());
         // Iterative
-        subsetsOfInt = getSubsetsOfInt(numbers);
+        int[] nums = {1, 2};
+        subsetsOfInt = getSubsetsOfInt(nums);
         System.out.println("Iterative - " + subsetsOfInt.toString());
         // Duplicates
         numbers = new int[] {1, 2, 2};

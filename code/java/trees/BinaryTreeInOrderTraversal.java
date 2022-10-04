@@ -22,10 +22,19 @@ public class BinaryTreeInOrderTraversal {
         List<Integer> result = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
         while (root != null || !stack.isEmpty()) {
+            // Keep traversing to left and add it to stack till last
             if (root != null) {
                 stack.push(root);
                 root = root.left;
             } else {
+                //   1
+                //  / \
+                // 2   3
+                // All left tree traversed and currently root is NULL
+                // 2 is added to result, Stack is only having 1
+                // If current node is 2, and it's popped out, 2's right is assigned to root which is NULL
+                // So in the next iteration root still be NULL.
+                // Stack top value 1 added to result and 1 popped out and 1's right 3 assigned to root.
                 result.add(stack.peek().data);
                 root = stack.pop().right;
             }
