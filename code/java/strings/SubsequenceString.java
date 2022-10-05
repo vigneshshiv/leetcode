@@ -9,14 +9,14 @@ import java.util.function.BiConsumer;
 public class SubsequenceString {
 
     private static boolean isSubsequence(String s, String t) {
-        int i = 0, j = 0;
-        while (i < s.length() && j < t.length()) {
+        int i = 0, j = 0, m = s.length(), n = t.length();
+        while (i < m && j < n) {
             if (s.charAt(i) == t.charAt(j)) {
                 i += 1;
             }
             j += 1;
         }
-        return i == s.length();
+        return i == m;
     }
 
     private static boolean isSubsequenceOptimal(String s, String t) {
@@ -41,7 +41,7 @@ public class SubsequenceString {
      *  idx=[a={1}, b={0,6}, c={5}]
      *  i=0 ('a'): prev=1
      *  i=1 ('b'): prev=6
-     *  i=2 ('c'): prev=? (return false)
+     *  i=2 ('c'): prev=-1 (return false)
      */
     private static boolean isSubsequenceOptimalForLargeSets(String s, String t) {
         List<Integer>[] idx = new List[256];
@@ -72,7 +72,7 @@ public class SubsequenceString {
                 start = mid + 1;
             }
         }
-        return start == list.size() ? -1 : list.get(start) + 1;
+        return start == list.size() ? -1 : list.get(start);
     }
 
     private static boolean isSubsequenceUsingStack(String s, String t) {
@@ -90,9 +90,10 @@ public class SubsequenceString {
     }
 
     private static boolean isSubquenceUsingDPRecursive(String s, String t) {
-        int[][] memo = new int[s.length()][t.length()];
-        int length = lcsRecursion(s, t, s.length() - 1, t.length() - 1, memo);
-        return length == s.length();
+        int m = s.length(), n = t.length();
+        int[][] memo = new int[m][n];
+        int length = lcsRecursion(s, t, m - 1, n - 1, memo);
+        return length == m;
     }
 
     private static int lcsRecursion(String s, String t, int i, int j, int[][] memo) {
@@ -109,24 +110,25 @@ public class SubsequenceString {
     }
 
     private static boolean isSubsequenceUsingDPBottomUp(String s, String t) {
-        int[][] table = new int[s.length()][t.length()];
+        int m = s.length(), n = t.length();
+        int[][] table = new int[m][n];
         Arrays.setAll(table, r -> {
             Arrays.fill(table[r], -1);
             return table[r];
         });
-        int length = lcsBottomUp(s, t, s.length() - 1, t.length() - 1, table);
-        return length == s.length();
+        int length = lcsBottomUp(s, t, m - 1, n - 1, table);
+        return length == m;
     }
 
-    private static int lcsBottomUp(String s, String t, int i, int j, int[][] table) {
+    private static int lcsBottomUp(String s, String t, int i, int j, int[][] dp) {
         if (i < 0 || j < 0) return 0;
-        if (table[i][j] != -1) {
-            return table[i][j];
+        if (dp[i][j] != -1) {
+            return dp[i][j];
         }
         if (s.charAt(i) == t.charAt(j)) {
-            return table[i][j] = 1 + lcsBottomUp(s, t, i - 1, j - 1, table);
+            return dp[i][j] = 1 + lcsBottomUp(s, t, i - 1, j - 1, dp);
         }
-        return table[i][j] = Math.max(lcsBottomUp(s, t, i - 1, j, table), lcsBottomUp(s, t, i, j - 1, table));
+        return dp[i][j] = Math.max(lcsBottomUp(s, t, i - 1, j, dp), lcsBottomUp(s, t, i, j - 1, dp));
     }
 
     public static void main(String[] args) {
@@ -150,6 +152,10 @@ public class SubsequenceString {
         //
         s = "axc"; t = "ahbgdc";
         isSubsequence = isSubsequenceOptimal(s, t);
+        logger.accept(new String[] {s, t}, isSubsequence);
+        //
+        s = "bcd"; t = "ubcd";
+        isSubsequence = isSubsequenceOptimalForLargeSets(s, t);
         logger.accept(new String[] {s, t}, isSubsequence);
     }
 
