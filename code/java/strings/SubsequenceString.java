@@ -98,8 +98,8 @@ public class SubsequenceString {
 
     private static int lcsRecursion(String s, String t, int i, int j, int[][] memo) {
         int result = 0;
+        if (i < 0 || j < 0) return result;
         if (memo[i][j] > 0) return memo[i][j];
-        if (i == 0 || j == 0) return result;
         if (s.charAt(i) == t.charAt(j)) {
             result = 1 + lcsRecursion(s, t, i - 1, j - 1, memo);
         } else {
@@ -147,7 +147,7 @@ public class SubsequenceString {
         s = "abc"; t = "ahbgdc";
         isSubsequence = isSubsequenceOptimalForLargeSets(s, t);
         logger.accept(new String[] {s, t}, isSubsequence);
-        isSubsequence = isSubquenceUsingDPRecursive(s, t);
+        isSubsequence = isSubsequenceOptimalForLargeSets(s, t);
         logger.accept(new String[] {s, t}, isSubsequence);
         //
         s = "axc"; t = "ahbgdc";
@@ -155,7 +155,7 @@ public class SubsequenceString {
         logger.accept(new String[] {s, t}, isSubsequence);
         //
         s = "bcd"; t = "ubcd";
-        isSubsequence = isSubsequenceOptimalForLargeSets(s, t);
+        isSubsequence = isSubquenceUsingDPRecursive(s, t);
         logger.accept(new String[] {s, t}, isSubsequence);
     }
 
