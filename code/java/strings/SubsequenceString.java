@@ -111,12 +111,12 @@ public class SubsequenceString {
 
     private static boolean isSubsequenceUsingDPBottomUp(String s, String t) {
         int m = s.length(), n = t.length();
-        int[][] table = new int[m][n];
-        Arrays.setAll(table, r -> {
-            Arrays.fill(table[r], -1);
-            return table[r];
+        int[][] dp = new int[m][n];
+        Arrays.setAll(dp, r -> {
+            Arrays.fill(dp[r], -1);
+            return dp[r];
         });
-        int length = lcsBottomUp(s, t, m - 1, n - 1, table);
+        int length = lcsBottomUp(s, t, m - 1, n - 1, dp);
         return length == m;
     }
 
