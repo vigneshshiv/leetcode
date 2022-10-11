@@ -19,10 +19,11 @@ public class Permutations {
     private static void permutations(int[] nums, List<List<Integer>> result, List<Integer> sets) {
         if (sets.size() == nums.length) {
             result.add(new ArrayList<>(sets));
+            return;
         }
-        for (int i = 0; i < nums.length; i++) {
-            if (sets.contains(nums[i])) continue;
-            sets.add(nums[i]);
+        for (int num : nums) {
+            if (sets.contains(num)) continue;
+            sets.add(num);
             permutations(nums, result, sets);
             sets.remove(sets.size() - 1);
         }
