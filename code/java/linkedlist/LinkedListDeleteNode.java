@@ -1,5 +1,8 @@
 package code.java.linkedlist;
 
+/**
+ * https://leetcode.com/problems/delete-node-in-a-linked-list/
+ */
 public class LinkedListDeleteNode {
 
     /**
@@ -37,6 +40,16 @@ public class LinkedListDeleteNode {
         //
         LinkedListNode.printData(head);
         deleteNode(deleteNode);
+        LinkedListNode.printData(head);
+        //
+        head = LinkedListNode.createNodes(new int[] {4, 5, 1, 9});
+        LinkedListNode.printData(head);
+        deleteNode(head.next);
+        LinkedListNode.printData(head);
+        //
+        head = LinkedListNode.createNodes(new int[] {4, 5, 1, 9});
+        LinkedListNode.printData(head);
+        deleteNode(head.next.next);
         LinkedListNode.printData(head);
     }
 
