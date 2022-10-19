@@ -39,10 +39,6 @@ public class TwoSum {
         target = 6;
         result = findTwoSumIndices(nums, target);
         System.out.println("Input - " + Arrays.toString(nums) + ", Target - " + target + ", Result - " + Arrays.toString(result));
-        //
-        System.out.println("27 binary - " + Integer.toBinaryString(27));
-        System.out.println("25 binary - " + Integer.toBinaryString(25));
-        System.out.println(25 ^ 23);
     }
 
 }
