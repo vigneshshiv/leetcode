@@ -74,6 +74,19 @@ public class SubtreeCheck {
         t2 = MethodsUtility.createTreeFromArray(array2);
         containsTree(t1, t2);
         containsTreeOptimal(t1, t2);
+        //
+        t1 = new TreeNode(4);
+        t1.left = new TreeNode(3);
+        t1.right = new TreeNode(5);
+        t1.left.left = new TreeNode(1);
+        t1.left.right = new TreeNode(2);
+        t1.left.right.left = new TreeNode(0);
+        //
+        t2 = new TreeNode(1);
+        t2.left = new TreeNode(4);
+        t2.right = new TreeNode(2);
+        containsTree(t1, t2);
+        containsTreeOptimal(t1, t2);
     }
 
 }
