@@ -11,6 +11,12 @@ import java.util.stream.Collectors;
  */
 public class GreatestCommonDivisorOfStrings {
     
+    /**
+     * m - Str1, n - str2
+     * 
+     * Time complexity - min(m, n) * (m + n)
+     * Space complexity - O(1)
+     */
     public static String gcdOfStrings(String str1, String str2) {
         int str1Len = str1.length(), str2Len = str2.length();
         if (str1.charAt(0) != str2.charAt(0)) {
